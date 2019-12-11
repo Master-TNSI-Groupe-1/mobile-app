@@ -24,18 +24,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%'
   },
+  btnSize : {
 
+  },
   title : {
     color: 'blue',
     marginTop: '5%',
     textAlign: 'center',
     fontSize: 25
   },
-
-  btnSize : {
-
-  },
-
   container: {
     flex: 1,
     backgroundColor: '#fff',

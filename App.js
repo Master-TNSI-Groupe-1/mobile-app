@@ -29,18 +29,31 @@ class HomeScreen extends React.Component {
     const {navigate} = this.props.navigation;
     return (
       <View style={styles.main}>
-        <Text style={styles.title}>{ this.state.dynamicTitle }</Text>
-        <Button
-          title="ParameterView"
-          onPress={() => navigate('Parameter', {place: 'ISTV'})}
-        />
+        <Text style={styles.title}>Liste de vos lieux sélectionnés</Text>
+        <View style={styles.list} >
+          <Button
+            style={styles.buttonSize}
+            title="Test UnivValenciennes"
+            onPress={() => navigate('Parameter', {place: 'ISTV'})}
+          />
+          <Button
+            style={styles.buttonSize}
+            title="Test UnivValenciennes -> ISTV"
+            onPress={() => navigate('Parameter', {place: 'ISTV'})}
+          />
+          <Button
+            style={styles.buttonSize}
+            title="Test UnivValenciennes -> ISTV -> Parametrage"
+            onPress={() => navigate('Parameter', {place: 'ISTV'})}
+          />
+        </View>
 
       </View>
     );
   }
 }
 
-//Ajouter sa vue dans le MainNavigator et ajouter un bouton dans HomeScreen pour 
+//Ajouter sa vue dans le MainNavigator et ajouter un bouton dans HomeScreen pour y acceder
 const MainNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
   Parameter: {screen: ParameterScreen},
@@ -50,66 +63,22 @@ const App = createAppContainer(MainNavigator);
 
 export default App;
 
-
-// export default class App extends React.Component {
-
-//   constructor(){
-//     super();
-
-//     this.state = {
-//       dynamicTitle : 'Flux App Monitoring'
-//     };
-//   }
-
-//   static navigationOptions = {
-//     title: 'Welcome',
-//   };
-
-//   render(){
-//     const {navigate} = this.props.navigation;
-//     return (
-//         <View style={styles.main}>
-//             <Text style={styles.title}>{ this.state.dynamicTitle }</Text>
-//             <View style={styles.container}>
-//               <Button
-//                 style={styles.btnSize}
-//                 title="Vous étes des champions"
-//                 onPress={ this.btnOnPress.bind(this) }
-//               />
-//               <Button
-//                 title="Go to Jane's profile"
-//                 onPress={() => navigate('Profile', {name: 'Jane'})}
-//               />
-//             </View>
-//         </View>
-   
-//     );
-//   }
-
-//   btnOnPress(){
-//     Alert.alert('Vous étes des champions, bon courage les mecs !!');
-
-//     this.setState({ 
-//       dynamicTitle: 'Happy Coding les mecs !'
-//     });
-//   }
-// }
-
 const styles = StyleSheet.create({
   main : {
     width: '100%',
     height: '100%'
   },
-
+  list : {
+    marginHorizontal: '5%'
+  },
   title : {
-    color: 'red',
+    color: 'black',
     marginTop: '5%',
     textAlign: 'center',
     fontSize: 25
   },
-
-  btnSize : {
-
+  buttonSize : {
+    paddingTop: '1%'
   },
 
   container: {
