@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
 
   btnSize : {
-    height: '200em'
+
   },
 
   container: {
