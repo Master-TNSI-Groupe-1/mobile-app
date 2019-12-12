@@ -1,18 +1,30 @@
-import React from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
-import { Button } from 'react-native-elements';
+import React, {Component} from 'react';
+import { StyleSheet, Text, View, Alert, TextInput, FlatList } from 'react-native';
+import { SearchBar } from 'react-native-elements';
+import { List, ListItem } from 'react-native-elements';
+import SearchPanel from './SearchPanel';
 
+
+export default class App extends React.Component {
+
+  render() {
+
+    return (
+      <SearchPanel/>
+    );
+  }
+}
 
 /* 
   Quickstart fonctionnel.
 */
-export default class App extends React.Component {
+/*export default class App extends React.Component {
 
   constructor(){
     super();
 
     this.state = {
-      dynamicTitle : 'Flux App Monitoring'
+      dynamicTitle : 'Appli React'
     };
   }
 
@@ -23,7 +35,7 @@ export default class App extends React.Component {
             <View style={styles.container}>
               <Button
                 style={styles.btnSize}
-                title="Vous étes des champions"
+                title="Je suis un bouton"
                 onPress={ this.btnOnPress.bind(this) }
               />
             </View>
@@ -33,10 +45,10 @@ export default class App extends React.Component {
   }
 
   btnOnPress(){
-    Alert.alert('Vous étes des champions, bon courage les mecs !!');
+    Alert.alert('C\'est bien t\'as su mettre ton doigt sur le bouton');
 
     this.setState({ 
-      dynamicTitle: 'Happy Coding les mecs !'
+      dynamicTitle: 'Vous avez cliqué sur le bouton'
     });
   }
 }
@@ -64,4 +76,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+});*/
