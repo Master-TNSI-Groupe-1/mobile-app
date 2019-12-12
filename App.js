@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import ParameterScreen from './ParameterView';
+import ParameterScreen from './components/ParameterView';
+import ListBatiments from './components/listBatiments'
 
 
 /* 
@@ -11,13 +12,14 @@ import ParameterScreen from './ParameterView';
 */
 class HomeScreen extends React.Component {
 
-  static navigationOptions = {
-    title: 'Welcome',
-  };
-
   constructor(){
     super();
     this.state = {
+      data:[
+        {title :"mont houy", data:[{key :"batiment 1"},{key: "batiment 2"},{key: "batiment 3"}]},
+        {title :"tertiale", data:[{key: "batiment 4"},{key: "batiment 5"},{key: "batiment 6"}]},
+        {title : "maubeuge", data:[{key: "batiment 7"},{key: "batiment 8"},{key: "batiment 9"}]}
+      ]
     };
   }
 
@@ -33,18 +35,18 @@ class HomeScreen extends React.Component {
         <View style={styles.list} >
           <Button
             style={styles.buttonSize}
-            title="Test UnivValenciennes"
-            onPress={() => navigate('Parameter', {place: 'ISTV'})}
+            title="Mont Houy"
+            onPress={() => navigate('Batiments', {location: 'Mont Houy', data: this.state.data[0]})}
           />
           <Button
             style={styles.buttonSize}
-            title="Test UnivValenciennes -> ISTV"
-            onPress={() => navigate('Parameter', {place: 'ISTV'})}
+            title="Valenciennes"
+            onPress={() => navigate('Batiments', {location: 'Valenciennes', data: this.state.data[1]})}
           />
           <Button
             style={styles.buttonSize}
-            title="Test UnivValenciennes -> ISTV -> Parametrage"
-            onPress={() => navigate('Parameter', {place: 'ISTV'})}
+            title="Maubeuge"
+            onPress={() => navigate('Batiments', {location: 'Maubeuge', data: this.state.data[2]})}
           />
         </View>
 
@@ -57,6 +59,7 @@ class HomeScreen extends React.Component {
 const MainNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
   Parameter: {screen: ParameterScreen},
+  Batiments: {screen: ListBatiments},
 });
 
 const App = createAppContainer(MainNavigator);
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 25
   },
   buttonSize : {
-    paddingTop: '1%'
+    paddingTop: '5%'
   },
 
   container: {
