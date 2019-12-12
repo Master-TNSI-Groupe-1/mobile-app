@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import ParameterScreen from './ParameterView';
+import DetailslieuScreen from './src/Components/Detailslieu';
 
 
 /* 
@@ -46,6 +47,11 @@ class HomeScreen extends React.Component {
             title="Test UnivValenciennes -> ISTV -> Parametrage"
             onPress={() => navigate('Parameter', {place: 'ISTV'})}
           />
+          <Button
+            style={styles.buttonSize}
+            title="Test UnivValenciennes -> ISTV -> Details Lieu"
+            onPress={() => navigate('Detailslieu', {place: 'ISTV'})}
+          />
         </View>
 
       </View>
@@ -57,6 +63,7 @@ class HomeScreen extends React.Component {
 const MainNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
   Parameter: {screen: ParameterScreen},
+  Detailslieu:{screen:DetailslieuScreen},
 });
 
 const App = createAppContainer(MainNavigator);
