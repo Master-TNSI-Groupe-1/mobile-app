@@ -21,7 +21,7 @@ export default class ListBatiments extends Component {
     render() {
         const data = this.props.navigation.getParam('data');
         // const location = this.props.navigation.getParam('location');
-        // console.log(data.data);
+        // console.log(data);
         // console.log(location)
 
             return( <View style={styles.container}>

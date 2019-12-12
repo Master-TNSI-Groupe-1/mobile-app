@@ -18,7 +18,7 @@ class HomeScreen extends React.Component {
       data:[
         {title :"mont houy", data:[{key :"batiment 1"},{key: "batiment 2"},{key: "batiment 3"}]},
         {title :"tertiale", data:[{key: "batiment 4"},{key: "batiment 5"},{key: "batiment 6"}]},
-        {title : "maubeuge", data:[{key: "batiment 7"},{key: "batiment 8"},{key: "batiment 9"}]}
+        {title : "maubeuge", data:[{key: "batiment 7"},{key: "batiment 8"},{key: "batiment 9"}, {key: "batiment 10"}]}
       ]
     };
   }
@@ -33,21 +33,15 @@ class HomeScreen extends React.Component {
       <View style={styles.main}>
         <Text style={styles.title}>Liste de vos lieux sélectionnés</Text>
         <View style={styles.list} >
-          <Button
-            style={styles.buttonSize}
-            title="Mont Houy"
-            onPress={() => navigate('Batiments', {location: 'Mont Houy', data: this.state.data[0]})}
-          />
-          <Button
-            style={styles.buttonSize}
-            title="Valenciennes"
-            onPress={() => navigate('Batiments', {location: 'Valenciennes', data: this.state.data[1]})}
-          />
-          <Button
-            style={styles.buttonSize}
-            title="Maubeuge"
-            onPress={() => navigate('Batiments', {location: 'Maubeuge', data: this.state.data[2]})}
-          />
+          {
+            this.state.data.map((value, key) => {
+              return <Button key={key}
+                        style={styles.buttonSize}
+                        title={value.title}
+                        onPress={() => navigate('Batiments', {location: value.title, data: value})}
+                      />
+            })
+          }
         </View>
 
       </View>
