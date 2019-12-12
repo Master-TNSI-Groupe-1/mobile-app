@@ -24,10 +24,25 @@ export default class ListBatiments extends Component {
         // console.log(data);
         // console.log(location)
 
-            return( <View style={styles.container}>
+            return( <View style={styles.container} >
                         <FlatList
                             data={data.data}
-                            renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}/>
+                            renderItem={({item}) => 
+                                <Text onPress={() => {
+                                    Alert.alert(`${item.key}`, 
+                                        'details du batiments',
+                                        [
+                                            {
+                                                text: 'Fermer',
+                                                onPress: () => console.log('Cancel Pressed'),
+                                                style: 'cancel',
+                                            },
+                                            {text: 'Voir', onPress: () => console.log('OK Pressed')},
+                                        ]
+                                    );
+                                }}style={styles.item} >{item.key}</Text>
+                            }
+                        />
                     </View>
             
             );
@@ -45,5 +60,6 @@ const styles = StyleSheet.create({
       padding: 10,
       fontSize: 18,
       height: 44,
+      borderBottomWidth: 1
     },
 })
