@@ -4,7 +4,7 @@ import { Button } from 'react-native-elements';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import ParameterScreen from './ParameterView';
-import DetailslieuScreen from './Components/Detailslieu';
+import DetailslieuScreen from './components/Detailslieu';
 
 
 /* 
