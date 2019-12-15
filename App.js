@@ -23,10 +23,7 @@ class HomeScreen extends React.Component {
             data: [
                 {title: "Mont houy", data: [{key: "Batiment 1"}, {key: "Batiment 2"}, {key: "Batiment 3"}]},
                 {title: "Tertiale", data: [{key: "Batiment 4"}, {key: "Batiment 5"}, {key: "Batiment 6"}]},
-                {
-                    title: "Maubeuge",
-                    data: [{key: "Batiment 7"}, {key: "Batiment 8"}, {key: "Batiment 9"}, {key: "Batiment 10"}]
-                }
+                {title: "Maubeuge", data: [{key: "Batiment 7"}, {key: "Batiment 8"}, {key: "Batiment 9"}, {key: "Batiment 10"}]}
             ]
         };
     }
@@ -63,7 +60,6 @@ const MainNavigator = createStackNavigator({
     Parameter: {screen: ParameterScreen},
     Batiments: {screen: ListBatiments},
     Detailslieu:{screen:DetailslieuScreen},
-
 });
 
 const App = createAppContainer(MainNavigator);
