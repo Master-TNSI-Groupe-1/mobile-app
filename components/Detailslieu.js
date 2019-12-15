@@ -23,15 +23,14 @@ export default class DetailslieuScreen extends React.Component {
     return (
     <View style={styles.main}>
     <Text style={styles.titleDetail}>Plus de Details pour: {place}</Text>
-          <View>
-          <FlatList
-               data={info_lieu}
-               keyExtractor={(item) => item.id.toString()}
-               renderItem={({item}) => <DetailsItem Detail={item}/>
-               }
-          />
-              
-        </View>
+          <View style={styles.flatListContainer}>
+            <FlatList
+                data={info_lieu}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({item}) => <DetailsItem Detail={item}/>
+                }
+            />     
+          </View>
         
              </View>
 
@@ -49,16 +48,18 @@ const styles = StyleSheet.create({
 
   },
   titleDetail : {
-    color: '#fff',
-    //marginTop: '5%',
-    padding:20,
+    color: 'white',
+    marginBottom: '5%',
+    paddingTop:'7%',
     textAlign: 'center',
     fontSize: 20,
-   // marginBottom:10,
-    backgroundColor: '#52B3D9',
-    height:70,
+    backgroundColor: '#74b9ff',
+    height: '11%',
     width:'100%',
-    
+  },
+
+  flatListContainer: {
+   // paddingTop: '5%'
   },
 
    row: { 

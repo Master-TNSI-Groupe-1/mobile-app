@@ -17,10 +17,6 @@ export default class ListBatiments extends Component {
           };
     };
 
-    showList = (element) => {
-      console.log(element);
-    };
-
     componentDidMount() {
         const data = this.props.navigation.getParam('data');
         this.setState(
@@ -109,39 +105,27 @@ const styles = StyleSheet.create({
       height: 44,
       borderBottomWidth: 1
     },
+
     row: {
         flexDirection: 'row',
-       // alignItems:'baseline',
-        //marginTop:5,
-        //paddingTop:10,
         paddingBottom:10,
         borderBottomWidth:0.4,
-        //borderTopWidth:0.2,
         borderLeftWidth:0.2,
         borderRightWidth:0.2,
-       // borderColor:'grey',
         marginHorizontal: 15,
-       // shadowOffset:{  width: 1,  height: 1,  },
-       // shadowColor: 'white',
-        //shadowOpacity: 0.5,
         borderStyle: 'solid',
-       // justifyContent:"center",
-        //borderRadius:7,
-
-
    },
-   titleDetail : {
-    color: '#fff',
-    //marginTop: '5%',
-    padding:20,
-    textAlign: 'center',
-    fontSize: 20,
-   // marginBottom:10,
-    backgroundColor: '#52B3D9',
-    height:70,
-    width:'100%',
 
-  },
+   titleDetail : {
+        color: '#fff',
+        paddingTop:'7%',
+        textAlign: 'center',
+        fontSize: 20,
+        backgroundColor: '#74b9ff',
+        height: '11%',
+        width:'100%',
+    },
+
     niv2:{
       marginTop:13,
       fontSize:14,

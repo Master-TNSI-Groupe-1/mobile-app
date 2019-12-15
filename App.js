@@ -55,14 +55,16 @@ class HomeScreen extends React.Component {
     }
 
     static navigationOptions = {
-        title: 'Flux App Monitoring',
+        title: 'Flux Monitoring',
     };
 
     render() {
         const {navigate} = this.props.navigation;
         return (
             <View style={styles.main}>
-                <Text style={styles.title}>Liste de vos lieux sélectionnés</Text>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.title}>Liste des sites !</Text>
+                </View>
                 <View style={styles.list}>
                     {
                         this.state.data.map((value, key) => {
@@ -100,11 +102,15 @@ const styles = StyleSheet.create({
     list: {
         marginHorizontal: '5%'
     },
+    titleContainer: {
+        backgroundColor: '#74b9ff',
+        height: '11%'
+    },
     title: {
-        color: 'black',
-        marginTop: '5%',
+        marginTop: '7%',
+        color: 'white',
         textAlign: 'center',
-        fontSize: 25
+        fontSize: 20
     },
     buttonSize: {
         paddingTop: '5%'
