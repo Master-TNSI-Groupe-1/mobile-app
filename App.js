@@ -21,9 +21,9 @@ class HomeScreen extends React.Component {
         super();
         this.state = {
             data: [
-                {title: "Mont houy", data: [{key: "Batiment 1"}, {key: "Batiment 2"}, {key: "Batiment 3"}]},
-                {title: "Tertiale", data: [{key: "Batiment 4"}, {key: "Batiment 5"}, {key: "Batiment 6"}]},
-                {title: "Maubeuge", data: [{key: "Batiment 7"}, {key: "Batiment 8"}, {key: "Batiment 9"}, {key: "Batiment 10"}]}
+                {title: "Mont houy", data: [{key: "Batiment 1",capacityInstant: 10, capacityMax: 300}, {key: "Batiment 2",capacityInstant: 50, capacityMax: 100}, {key: "Batiment 3",capacityInstant: 100, capacityMax: 250}]},
+                {title: "Tertiale", data: [{key: "Batiment 4",capacityInstant: 200, capacityMax: 200}, {key: "Batiment 5",capacityInstant: 10, capacityMax: 200}, {key: "Batiment 6",capacityInstant: 10, capacityMax: 30}]},
+                {title: "Maubeuge", data: [{key: "Batiment 7",capacityInstant: 100, capacityMax: 200}, {key: "Batiment 8",capacityInstant: 80, capacityMax: 200}, {key: "Batiment 9",capacityInstant: 20, capacityMax: 20}, {key: "Batiment 10",capacityInstant: 50, capacityMax: 100}]}
             ]
         };
     }

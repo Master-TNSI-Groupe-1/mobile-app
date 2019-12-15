@@ -19,7 +19,7 @@ export default class ListBatiments extends Component {
 
     showList = (element) => {
       console.log(element);
-    }; 
+    };
 
     componentDidMount() {
         const data = this.props.navigation.getParam('data');
@@ -48,9 +48,9 @@ export default class ListBatiments extends Component {
         const {navigate} = this.props.navigation;
         const data = this.props.navigation.getParam('data');
 
-        return( 
+        return(
                 <View style={styles.container} >
-                
+
                     <Text style={styles.titleDetail}>Batiments</Text>
 
                     <SearchBar
@@ -78,11 +78,11 @@ export default class ListBatiments extends Component {
                                             },
                                             {text: 'Voir', onPress: () => navigate('Detailslieu', {location: item.key, data: item})},
                                         ]
-                                    ); 
+                                    );
                                 }}style={styles.item} >{item.key} : </Text>
 
                                 <View>
-                                    <Text style={styles.niv2} >Instantané: 50/100</Text>
+                                    <Text style={styles.niv2} >Instantané: {item.capacityInstant}/{item.capacityMax}</Text>
                                     <Text style={styles.niv2} onPress={() => {navigate('Detailslieu', {location: item.key, data: item})}}>Afficher plus d'horaires</Text>
                                     <Text style={styles.niv2} >Etre notifier</Text>
                                 </View>
@@ -92,8 +92,8 @@ export default class ListBatiments extends Component {
                 </View>
         );
     }
-       
-    
+
+
 }
 
 
@@ -109,26 +109,26 @@ const styles = StyleSheet.create({
       height: 44,
       borderBottomWidth: 1
     },
-    row: { 
+    row: {
         flexDirection: 'row',
        // alignItems:'baseline',
         //marginTop:5,
-        //paddingTop:10, 
+        //paddingTop:10,
         paddingBottom:10,
-        borderBottomWidth:0.4, 
+        borderBottomWidth:0.4,
         //borderTopWidth:0.2,
         borderLeftWidth:0.2,
         borderRightWidth:0.2,
-       // borderColor:'grey', 
+       // borderColor:'grey',
         marginHorizontal: 15,
        // shadowOffset:{  width: 1,  height: 1,  },
        // shadowColor: 'white',
-        //shadowOpacity: 0.5, 
-        borderStyle: 'solid', 
+        //shadowOpacity: 0.5,
+        borderStyle: 'solid',
        // justifyContent:"center",
-        //borderRadius:7,  
-        
-        
+        //borderRadius:7,
+
+
    },
    titleDetail : {
     color: '#fff',
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#52B3D9',
     height:70,
     width:'100%',
-    
+
   },
     niv2:{
       marginTop:13,
