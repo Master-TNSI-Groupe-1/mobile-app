@@ -11,18 +11,18 @@ export default class DetailslieuScreen extends React.Component {
     super();
 
 }
-static navigationOptions = ({ navigation }) => {
+/*static navigationOptions = ({ navigation }) => {
     return {
-        title: navigation.getParam('place'),
+       // title: navigation.getParam('place'),
       };
-};
+};*/
 
   render() {
-    const {navigation} = this.props;
-    var place = JSON.stringify(navigation.getParam('place', 'Place not selected'))
+    const place = this.props.navigation.getParam('location');
+    //var place = JSON.stringify(navigation.getParam('location'));
     return (
     <View style={styles.main}>
-    <Text style={styles.titleDetail}>Plus de Details </Text>
+    <Text style={styles.titleDetail}>Plus de Details pour: {place}</Text>
           <View>
           <FlatList
                data={info_lieu}
