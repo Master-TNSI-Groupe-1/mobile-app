@@ -4,7 +4,8 @@ import {Button} from 'react-native-elements';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import ParameterScreen from './components/ParameterView';
-import ListBatiments from './components/listBatiments'
+import ListBatiments from './components/listBatiments';
+import DetailslieuScreen from './components/Detailslieu';
 
 import registerForPushNotificationsAsync from './components/notifications';
 
@@ -20,12 +21,9 @@ class HomeScreen extends React.Component {
         super();
         this.state = {
             data: [
-                {title: "mont houy", data: [{key: "batiment 1"}, {key: "batiment 2"}, {key: "batiment 3"}]},
-                {title: "tertiale", data: [{key: "batiment 4"}, {key: "batiment 5"}, {key: "batiment 6"}]},
-                {
-                    title: "maubeuge",
-                    data: [{key: "batiment 7"}, {key: "batiment 8"}, {key: "batiment 9"}, {key: "batiment 10"}]
-                }
+                {title: "Mont houy", data: [{key: "Batiment 1"}, {key: "Batiment 2"}, {key: "Batiment 3"}]},
+                {title: "Tertiale", data: [{key: "Batiment 4"}, {key: "Batiment 5"}, {key: "Batiment 6"}]},
+                {title: "Maubeuge", data: [{key: "Batiment 7"}, {key: "Batiment 8"}, {key: "Batiment 9"}, {key: "Batiment 10"}]}
             ]
         };
     }
@@ -61,6 +59,7 @@ const MainNavigator = createStackNavigator({
     Home: {screen: HomeScreen},
     Parameter: {screen: ParameterScreen},
     Batiments: {screen: ListBatiments},
+    Detailslieu:{screen:DetailslieuScreen},
 });
 
 const App = createAppContainer(MainNavigator);
