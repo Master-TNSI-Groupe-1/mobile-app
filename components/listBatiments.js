@@ -96,16 +96,14 @@ export default class ListBatiments extends Component {
 
 const styles = StyleSheet.create({
     container: {
-     flex: 1,
-     paddingTop: 22
+        flex: 1,
     },
     item: {
-      padding: 10,
-      fontSize: 18,
-      height: 44,
-      borderBottomWidth: 1
+        padding: 10,
+        fontSize: 18,
+        height: 44,
+        borderBottomWidth: 1
     },
-
     row: {
         flexDirection: 'row',
         paddingBottom:10,
@@ -114,9 +112,8 @@ const styles = StyleSheet.create({
         borderRightWidth:0.2,
         marginHorizontal: 15,
         borderStyle: 'solid',
-   },
-
-   titleDetail : {
+    },
+    titleDetail : {
         color: '#fff',
         paddingTop:'7%',
         textAlign: 'center',
@@ -125,10 +122,9 @@ const styles = StyleSheet.create({
         height: '11%',
         width:'100%',
     },
-
     niv2:{
-      marginTop:13,
-      fontSize:14,
+        marginTop:13,
+        fontSize:14,
     },
 })
 
