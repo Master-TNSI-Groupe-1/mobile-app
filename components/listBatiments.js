@@ -17,10 +17,6 @@ export default class ListBatiments extends Component {
           };
     };
 
-    showList = (element) => {
-      console.log(element);
-    }; 
-
     componentDidMount() {
         const data = this.props.navigation.getParam('data');
         this.setState(
@@ -33,6 +29,7 @@ export default class ListBatiments extends Component {
             }
         );
     }
+
     SearchFilterFunction(text) {
         const newData = this.arrayholder.filter(function(item) {
             const itemData = item.key ? item.key.toUpperCase() : ''.toUpperCase();
@@ -44,6 +41,7 @@ export default class ListBatiments extends Component {
             search:text,
         });
     }
+
     render() {
         const {navigate} = this.props.navigation;
         const data = this.props.navigation.getParam('data');
@@ -101,47 +99,35 @@ export default class ListBatiments extends Component {
 const styles = StyleSheet.create({
     container: {
      flex: 1,
-     paddingTop: 22
     },
+
     item: {
       padding: 10,
       fontSize: 18,
       height: 44,
       borderBottomWidth: 1
     },
+
     row: { 
         flexDirection: 'row',
-       // alignItems:'baseline',
-        //marginTop:5,
-        //paddingTop:10, 
         paddingBottom:10,
         borderBottomWidth:0.4, 
-        //borderTopWidth:0.2,
         borderLeftWidth:0.2,
         borderRightWidth:0.2,
-       // borderColor:'grey', 
         marginHorizontal: 15,
-       // shadowOffset:{  width: 1,  height: 1,  },
-       // shadowColor: 'white',
-        //shadowOpacity: 0.5, 
-        borderStyle: 'solid', 
-       // justifyContent:"center",
-        //borderRadius:7,  
-        
-        
+        borderStyle: 'solid',     
    },
+
    titleDetail : {
-    color: '#fff',
-    //marginTop: '5%',
-    padding:20,
-    textAlign: 'center',
-    fontSize: 20,
-   // marginBottom:10,
-    backgroundColor: '#52B3D9',
-    height:70,
-    width:'100%',
-    
-  },
+        color: '#fff',
+        paddingTop:'7%',
+        textAlign: 'center',
+        fontSize: 20,
+        backgroundColor: '#74b9ff',
+        height: '11%',
+        width:'100%',
+    },
+
     niv2:{
       marginTop:13,
       fontSize:14,

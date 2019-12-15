@@ -7,7 +7,7 @@ export default class DetailsItem extends React.Component {
   render() {  const Detail = this.props.Detail
     return (
       <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView>
 
           <View style={styles.row}>
 
@@ -34,26 +34,22 @@ const styles = StyleSheet.create({
     height: '100%',
 
   },
-  btnSize : {
 
-  },
   titleDetail : {
     color: '#fff',
-    //marginTop: '5%',
+    marginTop: '5%',
+    marginBottom: '5%',
     padding:20,
     textAlign: 'center',
     fontSize: 20,
-   // marginBottom:10,
-    backgroundColor: '#52B3D9',
+    backgroundColor: '#74b9ff',
     height:70,
     width:'100%',
-    
   },
 
    row: { 
      flexDirection: 'row',
      alignItems: 'center',
-     //marginTop:5,
      paddingTop:10, 
      paddingBottom:10,
      borderBottomWidth:0.4, 
@@ -65,23 +61,29 @@ const styles = StyleSheet.create({
      shadowOffset:{  width: 1,  height: 1,  },
      shadowColor: 'white',
      shadowOpacity: 0.5, 
-     borderStyle: 'solid', 
-     //borderRadius:7,  
-     
-     
-},
-   heure: { width: 50, height: 50, borderRadius: 25, marginRight: 18, padding:15,marginLeft:20,},
+     borderStyle: 'solid',   
+    },
+
+   heure: { 
+     width: 50,
+     height: 50, 
+     borderRadius: 25, 
+     marginRight: 18, 
+     padding:15,
+     marginLeft:20
+   },
+
    primaryText: {
-     
      fontSize: 14,
      color: 'black',
      marginBottom: 4,
      textAlign:"center",
      marginLeft:20,
    },
-   secondaryText: { color: 'black',fontSize: 14, marginLeft:20,},
-   scrollView: {
-    //marginHorizontal: 20,
-  },
+
+   secondaryText: { 
+    color: 'black',
+    fontSize: 14,
+    marginLeft:20,
+   },
 });
-//export default DetailsItem
