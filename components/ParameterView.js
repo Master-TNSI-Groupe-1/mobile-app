@@ -10,7 +10,7 @@ export default class ParameterScreen extends React.Component {
   };
   render() {
     const {navigation} = this.props;
-    var place = JSON.stringify(navigation.getParam('place', 'Place not selected'))
+    var place = JSON.stringify(navigation.getParam('location', 'Place not selected'))
     return (
       <View style={styles.main}>
         <Text style={styles.title}>Le lieu selectionné est {place}</Text>

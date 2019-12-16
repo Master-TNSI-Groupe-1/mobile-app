@@ -2,14 +2,14 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { SearchBar } from 'react-native-elements';
 import { FlatList } from 'react-native'
-import lieux from './datas/lieux'
+import lieux from '../datas/lieux'
 
 class SearchPanel extends React.Component {
 
     
     state = {
         search: '',
-        lieuList: lieux
+        list: lieux
     };
 
     updateSearch (){
@@ -18,17 +18,17 @@ class SearchPanel extends React.Component {
 
 
 
-    SearchFilterFunction(lieuSearched) {
+    SearchFilterFunction(searchedWord, list) {
         //passing the inserted text in textinput
-        let lieuFilter = [];
-        for(let lieu of lieux){
-            if(lieu.name.toUpperCase().includes(lieuSearched.toUpperCase()))lieuFilter.push(lieu);
+        let listFiltered = [];
+        for(let item of list){
+            if(item.name.toUpperCase().includes(searchedWord.toUpperCase()))listFiltered.push(item);
         }
         this.setState({
           //setting the filtered newData on datasource
           //After setting the data it will automatically re-render the view
-          search: lieuSearched,
-          lieuList: lieuFilter
+          search: searchedWord,
+          list: listFiltered
         });
     }
 
@@ -38,13 +38,8 @@ class SearchPanel extends React.Component {
         <View style={{marginTop: 30}}>
             <SearchBar
             placeholder="Rechercher un lieu"
-            onChangeText={search => this.SearchFilterFunction(search)}
+            onChangeText={search => this.SearchFilterFunction(search, list)}
             value={search}
-            />
-            <FlatList
-            data = {this.state.lieuList}
-            keyExtractor={(item) => item.key.toString()} 
-            renderItem = {({item}) => <Text style={{fontSize: 25}}>{item.name}</Text>}
             />
         </View>
         )
