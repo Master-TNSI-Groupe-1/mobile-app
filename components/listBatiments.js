@@ -13,7 +13,7 @@ export default class ListBatiments extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.getParam('location'),
+            title: navigation.getParam('location') + ': bâtiments',
           };
     };
 
@@ -46,9 +46,7 @@ export default class ListBatiments extends Component {
 
         return(
                 <View style={styles.container} >
-
-                    <Text style={styles.titleDetail}>Batiments</Text>
-
+                      <Text style={styles.titleDetail}>Batiments</Text>
                     <SearchBar
                         searchIcon={{ size: 24 }}
                         onChangeText={text => this.SearchFilterFunction(text)}
@@ -79,8 +77,8 @@ export default class ListBatiments extends Component {
 
                                 <View>
                                     <Text style={styles.niv2} >Instantané: {item.capacityInstant}/{item.capacityMax}</Text>
-                                    <Text style={styles.niv2} onPress={() => {navigate('Detailslieu', {location: item.key, data: item})}}>Afficher plus d'horaires</Text>
-                                    <Text style={styles.niv2} >Etre notifier</Text>
+                                    <Text style={styles.link} onPress={() => {navigate('Detailslieu', {location: item.key, data: item})}}>Afficher plus d'horaires</Text>
+                                    <Text style={styles.link} >Être notifié</Text>
                                 </View>
                             </View>
                         }
@@ -123,8 +121,14 @@ const styles = StyleSheet.create({
         width:'100%',
     },
     niv2:{
-        marginTop:13,
-        fontSize:14,
+        marginTop:12,
+        fontSize:16,
+    },
+    link:{
+        marginTop: 5,
+        fontSize:16,
+        color: 'blue',
+        textDecorationLine: 'underline'
     },
 })
 
