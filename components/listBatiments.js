@@ -13,7 +13,7 @@ export default class ListBatiments extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.getParam('location'),
+            title: navigation.getParam('location') + ': bâtiments',
           };
     };
 
@@ -29,7 +29,6 @@ export default class ListBatiments extends Component {
             }
         );
     }
-
     SearchFilterFunction(text) {
         const newData = this.arrayholder.filter(function(item) {
             const itemData = item.key ? item.key.toUpperCase() : ''.toUpperCase();
@@ -41,16 +40,13 @@ export default class ListBatiments extends Component {
             search:text,
         });
     }
-
     render() {
         const {navigate} = this.props.navigation;
         const data = this.props.navigation.getParam('data');
 
-        return( 
+        return(
                 <View style={styles.container} >
-                
-                    <Text style={styles.titleDetail}>Batiments</Text>
-
+                      <Text style={styles.titleDetail}>Batiments</Text>
                     <SearchBar
                         searchIcon={{ size: 24 }}
                         onChangeText={text => this.SearchFilterFunction(text)}
@@ -76,13 +72,13 @@ export default class ListBatiments extends Component {
                                             },
                                             {text: 'Voir', onPress: () => navigate('Detailslieu', {location: item.key, data: item})},
                                         ]
-                                    ); 
+                                    );
                                 }}style={styles.item} >{item.key} : </Text>
 
                                 <View>
-                                    <Text style={styles.niv2} >Instantané: 50/100</Text>
-                                    <Text style={styles.niv2} onPress={() => {navigate('Detailslieu', {location: item.key, data: item})}}>Afficher plus d'horaires</Text>
-                                    <Text style={styles.niv2} >Etre notifier</Text>
+                                    <Text style={styles.niv2} >Instantané: {item.capacityInstant}/{item.capacityMax}</Text>
+                                    <Text style={styles.link} onPress={() => {navigate('Detailslieu', {location: item.key, data: item})}}>Afficher plus d'horaires</Text>
+                                    <Text style={styles.link} onPress={() => {navigate('Parameter', {location: item.key, data: item})}}>Être notifié</Text>
                                 </View>
                             </View>
                         }
@@ -90,35 +86,32 @@ export default class ListBatiments extends Component {
                 </View>
         );
     }
-       
-    
+
+
 }
 
 
 
 const styles = StyleSheet.create({
     container: {
-     flex: 1,
+        flex: 1,
     },
-
     item: {
-      padding: 10,
-      fontSize: 18,
-      height: 44,
-      borderBottomWidth: 1
+        padding: 10,
+        fontSize: 18,
+        height: 44,
+        borderBottomWidth: 1
     },
-
-    row: { 
+    row: {
         flexDirection: 'row',
         paddingBottom:10,
-        borderBottomWidth:0.4, 
+        borderBottomWidth:0.4,
         borderLeftWidth:0.2,
         borderRightWidth:0.2,
         marginHorizontal: 15,
-        borderStyle: 'solid',     
-   },
-
-   titleDetail : {
+        borderStyle: 'solid',
+    },
+    titleDetail : {
         color: '#fff',
         paddingTop:'7%',
         textAlign: 'center',
@@ -127,10 +120,15 @@ const styles = StyleSheet.create({
         height: '11%',
         width:'100%',
     },
-
     niv2:{
-      marginTop:13,
-      fontSize:14,
+        marginTop:12,
+        fontSize:16,
+    },
+    link:{
+        marginTop: 5,
+        fontSize:16,
+        color: 'blue',
+        textDecorationLine: 'underline'
     },
 })
 
