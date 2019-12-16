@@ -57,7 +57,7 @@ export default class ParameterScreen extends React.Component {
               minimumTrackTintColor="#000000"
               maximumTrackTintColor="#000000">
           </Slider>
-          <Text style={styles.sliderTitle}>Flux : {this.state.minFlowValue} %</Text>
+          <Text style={styles.sliderTitle}>Flux mini: {this.state.minFlowValue} %</Text>
           <Slider
               style={styles.slider}
               value={this.state.minFlowValue}
@@ -76,7 +76,7 @@ export default class ParameterScreen extends React.Component {
               minimumTrackTintColor="#000000"
               maximumTrackTintColor="#000000">
           </Slider>
-          <Text style={styles.sliderTitle}>Flux : {this.state.maxFlowValue} %</Text>
+          <Text style={styles.sliderTitle}>Flux maxi: {this.state.maxFlowValue} %</Text>
           <Slider
               style={styles.slider}
               value={this.state.maxFlowValue}
