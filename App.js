@@ -69,11 +69,7 @@ class HomeScreen extends React.Component {
     };
 
     SearchFilterFunction(searchedWord) {
-      //passing the inserted text in textinput
-      let listFiltered = [];
-      for(let item of this.placeList){
-          if(item.title.toUpperCase().includes(searchedWord.toUpperCase()))listFiltered.push(item);
-      }
+      let listFiltered = this.placeList.filter((item) => item.title.toUpperCase().includes(searchedWord.toUpperCase()));
       this.setState({
         search: searchedWord,
         data: listFiltered
