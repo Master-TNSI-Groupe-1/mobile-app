@@ -78,7 +78,7 @@ export default class ListBatiments extends Component {
                                 <View>
                                     <Text style={styles.niv2} >Instantané: {item.capacityInstant}/{item.capacityMax}</Text>
                                     <Text style={styles.link} onPress={() => {navigate('Detailslieu', {location: item.key, data: item})}}>Afficher plus d'horaires</Text>
-                                    <Text style={styles.link} >Être notifié</Text>
+                                    <Text style={styles.link} onPress={() => {navigate('Parameter', {location: item.key, data: item})}}>Être notifié</Text>
                                 </View>
                             </View>
                         }
