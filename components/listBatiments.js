@@ -68,8 +68,7 @@ export default class ListBatiments extends Component {
                                         'details du batiments',
                                         [
                                             {
-                                                text: 'Fermer',
-                                                onPress: () => console.log('Cancel Pressed'),
+                                                text: 'Fermer', onPress: () => console.log('Cancel Pressed'),
                                                 style: 'cancel',
                                             },
                                             {text: 'Voir', onPress: () => navigate('Detailslieu', {location: item.key, data: item})},

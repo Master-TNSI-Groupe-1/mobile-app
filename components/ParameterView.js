@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Slider,Button } from 'react-native';
-import RangeSlider from 'react-native-range-slider';
 
 export default class ParameterScreen extends React.Component {
   state = {

@@ -1,11 +1,19 @@
 import React from 'react';
-import {StyleSheet, Text, View, Alert} from 'react-native';
+import {StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 import {Button} from 'react-native-elements';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
+import Constants from 'expo-constants';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import * as TaskManager from 'expo-task-manager';
 import ParameterScreen from './components/ParameterView';
 import ListBatiments from './components/listBatiments';
 import DetailslieuScreen from './components/Detailslieu';
+
+/**constantes */
+const LOCATION_TASK_NAME = 'background-location-task';
+
 
 import registerForPushNotificationsAsync from './components/notifications';
 
@@ -13,14 +21,12 @@ import registerForPushNotificationsAsync from './components/notifications';
   Quickstart fonctionnel.
 */
 class HomeScreen extends React.Component {
-    componentDidMount() {
-        registerForPushNotificationsAsync();
-
-    }
 
     constructor() {
         super();
         this.state = {
+            location: null,
+            errorMessage: null, 
             data: [
                 {
                     title: "Mont houy",
@@ -58,6 +64,52 @@ class HomeScreen extends React.Component {
         title: 'Flux Monitoring',
     };
 
+    // componentDidMount() {
+    //   navigator.geolocation.getCurrentPosition(
+    //     position => {
+    //       const location = JSON.stringify(position);
+    //       this.setState({ cords: location });
+    //       // console.log(this.state.cords);
+    //     },
+    //     error => Alert.alert(error.message),
+    //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    //   );
+    // }
+
+
+    componentDidMount() {
+      registerForPushNotificationsAsync();
+      if (Platform.OS === 'android' && !Constants.isDevice) {
+        this.setState({
+          errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+        });
+      } else {
+        this.getLocationAsync();
+        this.updateLocationBackground();
+      }
+    }
+
+    getLocationAsync = async () => {
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== 'granted') {
+        this.setState({
+          errorMessage: 'Permission to access location was denied',
+        });
+      }
+  
+      const location = await Location.getCurrentPositionAsync({});
+      this.setState({ location: JSON.stringify(location) });
+      console.log('location', this.state.location)
+    };
+
+    updateLocationBackground = async () => {
+      await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+        accuracy: Location.Accuracy.Balanced,
+        distanceInterval: 0.5,
+        showsBackgroundLocationIndicator: false,
+      })
+    };
+
     render() {
         const {navigate} = this.props.navigation;
         return (
@@ -76,6 +128,12 @@ class HomeScreen extends React.Component {
                         })
                     }
                 </View>
+                <View style={styles.container}>
+                  {/* <TouchableOpacity onPress={this.onPress}>
+                    <Text>Activer la géo-localisation en arrière plan!</Text>
+                  </TouchableOpacity> */}
+                  <Text style={styles.paragraph}>Cordonnées gps: {this.state.location}</Text>
+                </View>
 
             </View>
         );
@@ -93,6 +151,17 @@ const MainNavigator = createStackNavigator({
 const App = createAppContainer(MainNavigator);
 
 export default App;
+
+
+TaskManager.defineTask(LOCATION_TASK_NAME, ({ data: { locations }, error }) => {
+  if (error) {
+    // Error occurred - check `error.message` for more details.
+    console.log('error',error)
+    return;
+  }
+  // this.setState({ location: JSON.stringify(location) });
+  console.log('Received new locations ' + new Date(), locations);
+});
 
 const styles = StyleSheet.create({
     main: {
@@ -115,7 +184,11 @@ const styles = StyleSheet.create({
     buttonSize: {
         paddingTop: '5%'
     },
-
+    paragraph: {
+      margin: 24,
+      fontSize: 18,
+      textAlign: 'center',
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
