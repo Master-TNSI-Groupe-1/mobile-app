@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Slider,Button } from 'react-native';
 //import RangeSlider from 'react-native-range-slider';
 
 export default class ParameterScreen extends React.Component {
-
   constructor() {
     super();
     this.state = {
@@ -15,7 +14,6 @@ export default class ParameterScreen extends React.Component {
 
   }
   
-  
   static navigationOptions = {
     title: 'Flux App Monitoring',
   };
@@ -25,7 +23,9 @@ export default class ParameterScreen extends React.Component {
     var place = JSON.stringify(navigation.getParam('location', 'Place not selected'))
     return (
       <View style={styles.main}>
-        <Text style={styles.title}>Le lieu selectionné est {place}</Text>
+
+      <Text style={styles.titleDetail}>Le lieu selectionné est {place}</Text>
+        
         <View style={styles.sliderView}>
           <Text style={styles.sliderTitle}>Heures mini: {this.state.minTimeValue} H:</Text>
           <Slider
@@ -112,10 +112,7 @@ export default class ParameterScreen extends React.Component {
            </View>
            </View>
         </View>
-     
-
-        
-
+       
       </View>
     );
   }
@@ -125,7 +122,17 @@ const styles = StyleSheet.create({
   main : {
     width: '100%',
     height: '100%',
-  },
+
+  },    
+titleDetail : {
+  color: '#fff',
+  paddingTop:'7%',
+  textAlign: 'center',
+  fontSize: 20,
+  backgroundColor: '#74b9ff',
+  height: '11%',
+  width:'100%',
+},
   containerbuttonSize : {
    padding:40,
   },  buttonSize : {
