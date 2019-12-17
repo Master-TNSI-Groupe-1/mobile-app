@@ -3,12 +3,16 @@ import { StyleSheet, Text, View, Slider,Button } from 'react-native';
 import RangeSlider from 'react-native-range-slider';
 
 export default class ParameterScreen extends React.Component {
-  state = {
-    minTimeValue: 10,
-    maxTimeValue: 17,
-    minFlowValue: 40,
-    maxFlowValue: 60
-  };
+  constructor() {
+    super();
+    this.state = {
+      minTimeValue: 10,
+      maxTimeValue: 17,
+      minFlowValue: 40,
+      maxFlowValue: 60
+    };
+
+  }
   
   static navigationOptions = {
     title: 'Flux App Monitoring',
@@ -19,7 +23,9 @@ export default class ParameterScreen extends React.Component {
     var place = JSON.stringify(navigation.getParam('location', 'Place not selected'))
     return (
       <View style={styles.main}>
-        <Text style={styles.title}>Le lieu selectionné est {place}</Text>
+
+      <Text style={styles.titleDetail}>Le lieu selectionné est {place}</Text>
+        
         <View style={styles.sliderView}>
           <Text style={styles.sliderTitle}>Heures mini: {this.state.minTimeValue} H:</Text>
           <Slider
@@ -95,12 +101,18 @@ export default class ParameterScreen extends React.Component {
               minimumTrackTintColor="#000000"
               maximumTrackTintColor="#000000">
           </Slider>
+          <View style={styles.containerbuttonSize}>
+          <View style={styles.buttonSize}>
+              <Button 
+                onPress={() => {
+                  alert(JSON.stringify(this.state))}}
+                title="Valider"
+                color="#fff"
+             />
+           </View>
+           </View>
         </View>
-        <Button
-            style={styles.buttonSize}
-            title="Validé"
-            // onPress={() => navigate('Parameter', {place: 'ISTV'})} A COMPLETER RETOUR
-          />
+       
       </View>
     );
   }
@@ -110,8 +122,25 @@ const styles = StyleSheet.create({
   main : {
     width: '100%',
     height: '100%',
-  },
-  buttonSize : {
+
+  },    
+titleDetail : {
+  color: '#fff',
+  paddingTop:'7%',
+  textAlign: 'center',
+  fontSize: 20,
+  backgroundColor: '#74b9ff',
+  height: '11%',
+  width:'100%',
+},
+  containerbuttonSize : {
+   padding:40,
+  },  buttonSize : {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor:'#74b9ff',
+    width:100,
+    borderRadius:10,
 
   },
   title : {
@@ -130,7 +159,7 @@ const styles = StyleSheet.create({
     width: '100%', 
     height: '100%',
     paddingHorizontal: '25%',
-    marginTop: '15%'
+    marginTop: '15%',
   },
   slider : {
     width: 300, 
