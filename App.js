@@ -23,6 +23,8 @@ class HomeScreen extends React.Component {
 
     constructor() {
         super();
+        this.sitesURL = 'http://3.87.54.32/get/sites';
+        //this.placeList = this.getPlaces();
         this.placeList = [
             {
                 title: "Mont houy",
@@ -57,10 +59,16 @@ class HomeScreen extends React.Component {
             }
         ];
 
+
         this.state = {
           search: '',
-            data: [...this.placeList]
+          data: []
         };
+
+        this.getPlaces().then(data => {
+            this.placeList = data.data;
+            this.setState({data: data.data});
+        });
     }
 
 
@@ -69,12 +77,18 @@ class HomeScreen extends React.Component {
     };
 
     SearchFilterFunction(searchedWord) {
-      let listFiltered = this.placeList.filter((item) => item.title.toUpperCase().includes(searchedWord.toUpperCase()));
+      let listFiltered = this.placeList.filter((item) => item.name.toUpperCase().includes(searchedWord.toUpperCase()));
       this.setState({
         search: searchedWord,
         data: listFiltered
       });
   }
+
+    getPlaces(){
+        return fetch(this.sitesURL)
+        .then((response) => response.json())
+        .catch((error) => console.error(error))
+    }
 
 
     render() {
@@ -93,18 +107,16 @@ class HomeScreen extends React.Component {
             />
               <View style={styles.list}>
                     {
+
                         this.state.data.map((value, key) => {
                             return <Button key={key}
                                            style={styles.buttonSize}
-                                           title={value.title}
-                                           onPress={() => navigate('Batiments', {location: value.title, data: value})}
+                                           title={value.name}
+                                           onPress={() => navigate('Batiments', {site: value.name, id: value.id_site})}
                             />
                         })
                     }
                 </View>
-            
-            
-           
             </View>
         );
     }
