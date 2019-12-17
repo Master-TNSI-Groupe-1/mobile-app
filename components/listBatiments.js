@@ -7,43 +7,45 @@ export default class ListBatiments extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { isLoading: true, search: '' };
+        this.batimentsURL = 'http://3.87.54.32/get/lieux/';
+        this.state = { isLoading: true, search: '', batiments: [] };
         this.arrayholder = [];
     }
 
     static navigationOptions = ({ navigation }) => {
         return {
-            title: navigation.getParam('location') + ': bâtiments',
+            title: navigation.getParam('site') + ': bâtiments',
           };
     };
 
     componentDidMount() {
-        const data = this.props.navigation.getParam('data');
-        this.setState(
-            {
+        const idSite = this.props.navigation.getParam('id');
+        this.getBatiments(idSite).then(data => {
+            this.arrayholder = data.data;
+            this.setState({
                 isLoading: false,
-                dataSource: data.data
-            },
-            function() {
-                this.arrayholder = data.data;
-            }
-        );
-    }
-    SearchFilterFunction(text) {
-        const newData = this.arrayholder.filter(function(item) {
-            const itemData = item.key ? item.key.toUpperCase() : ''.toUpperCase();
-            const textData = text.toUpperCase();
-            return itemData.indexOf(textData) > -1;
+                batiments: data.data});
         });
+    }
+
+
+    SearchFilterFunction(searchedWord) {
+        let listFiltered = this.arrayholder.filter((item) => item.name.toUpperCase().includes(searchedWord.toUpperCase()));
         this.setState({
-            dataSource: newData,
-            search:text,
+          search: searchedWord,
+          batiments: listFiltered
         });
     }
+
+    getBatiments(idSite){
+        return fetch(this.batimentsURL + idSite)
+        .then((response) => response.json())
+        .catch((error) => console.error(error))
+    }
+
+
     render() {
         const {navigate} = this.props.navigation;
-        const data = this.props.navigation.getParam('data');
-
         return(
                 <View style={styles.container} >
                       <Text style={styles.titleDetail}>Batiments</Text>
@@ -58,11 +60,11 @@ export default class ListBatiments extends Component {
                     />
 
                     <FlatList
-                        data={this.state.dataSource}
+                        data={this.state.batiments}
                         renderItem={ ({item}) =>
                             <View style={styles.row}>
                                 <Text onPress={() => {
-                                    Alert.alert(`${item.key}`,
+                                    Alert.alert(`${item.name}`,
                                         'details du batiments',
                                         [
                                             {
@@ -70,15 +72,15 @@ export default class ListBatiments extends Component {
                                                 onPress: () => console.log('Cancel Pressed'),
                                                 style: 'cancel',
                                             },
-                                            {text: 'Voir', onPress: () => navigate('Detailslieu', {location: item.key, data: item})},
+                                            {text: 'Voir', onPress: () => navigate('Detailslieu', {location: item.name, data: item})},
                                         ]
                                     );
-                                }}style={styles.item} >{item.key} : </Text>
+                                }}style={styles.item} >{item.name} : </Text>
 
                                 <View>
-                                    <Text style={styles.niv2} >Instantané: {item.capacityInstant}/{item.capacityMax}</Text>
-                                    <Text style={styles.link} onPress={() => {navigate('Detailslieu', {location: item.key, data: item})}}>Afficher plus d'horaires</Text>
-                                    <Text style={styles.link} onPress={() => {navigate('Parameter', {location: item.key, data: item})}}>Être notifié</Text>
+                                    <Text style={styles.niv2} >Instantané: {item.number_user}/{item.number_places}</Text>
+                                    <Text style={styles.link} onPress={() => {navigate('Detailslieu', {location: item.name, data: item})}}>Afficher plus d'horaires</Text>
+                                    <Text style={styles.link} onPress={() => {navigate('Parameter', {location: item.name, data: item})}}>Être notifié</Text>
                                 </View>
                             </View>
                         }
