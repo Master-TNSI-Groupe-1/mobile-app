@@ -1,0 +1,1 @@
+export default lieuList = [{key: 1, name: 'Restaurant Universitaire'}, {key: 2, name: 'Parking ISTV1'}, {key: 3, name: 'Parking ISTV2'}, {key: 4 ,name: 'Parking ISTV3'}, {key: 5, name: 'SPHIMX'}]
