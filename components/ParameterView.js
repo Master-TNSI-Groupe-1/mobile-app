@@ -37,10 +37,10 @@ export default class ParameterScreen extends React.Component {
                   flowValue: previousState.flowValue 
                 }
               ))}
-              style={{width: 200, height: 40}}
+              style={{width: 260, height: 40}}
               minimumValue={0}
               maximumValue={24}
-              step={0.25}
+              step={1}
               minimumTrackTintColor="#000000"
               maximumTrackTintColor="#000000">
           </Slider>
@@ -55,10 +55,10 @@ export default class ParameterScreen extends React.Component {
                   flowValue: previousState.flowValue 
                 }
                 ))}
-              style={{width: 200, height: 40}}
-              minimumValue={0}
+              style={{width: 260, height: 40}}
+                minimumValue={0}
               maximumValue={24}
-              step={0.25}
+              step={1}
               minimumTrackTintColor="#000000"
               maximumTrackTintColor="#000000">
           </Slider>
@@ -74,7 +74,7 @@ export default class ParameterScreen extends React.Component {
                   maxFlowValue: previousState.maxFlowValue
                 }
               ))}}
-              style={{width: 200, height: 40}}
+              style={{width: 260, height: 40}}
               minimumValue={0}
               maximumValue={100}
               step={1}
@@ -93,7 +93,7 @@ export default class ParameterScreen extends React.Component {
                   maxFlowValue: value 
                 }
               ))}}
-              style={{width: 200, height: 40}}
+              style={{width: 260, height: 40}}
               minimumValue={0}
               maximumValue={100}
               step={1}
@@ -157,8 +157,8 @@ titleDetail : {
   sliderView : {
     width: '100%', 
     height: '100%',
-    paddingHorizontal: '25%',
     marginTop: '15%',
+    alignItems: 'center'
   },
   slider : {
     width: 300, 

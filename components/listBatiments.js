@@ -103,6 +103,7 @@ export default class ListBatiments extends Component {
                                     </View>
                                 </View>
                             }
+                            keyExtractor={item => item.id_location}
                         />
                     </ScrollView>
                 </View>

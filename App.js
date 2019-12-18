@@ -28,41 +28,7 @@ class HomeScreen extends React.Component {
     constructor() {
         super();
         this.sitesURL = 'http://3.87.54.32/get/sites';
-        //this.placeList = this.getPlaces();
-        this.placeList = [
-            {
-                title: "Mont houy",
-                image: "./monthouy.jpg",
-                data: [{key: "Batiment 1", capacityInstant: 10, capacityMax: 300}, {
-                    key: "Batiment 2",
-                    capacityInstant: 50,
-                    capacityMax: 100
-                }, {key: "Batiment 3", capacityInstant: 100, capacityMax: 250}]
-            },
-            {
-                title: "Tertiale",
-                image: "./monthouy.jpg",
-                data: [{key: "Batiment 4", capacityInstant: 200, capacityMax: 200}, {
-                    key: "Batiment 5",
-                    capacityInstant: 10,
-                    capacityMax: 200
-                }, {key: "Batiment 6", capacityInstant: 10, capacityMax: 30}]
-            },
-            {
-                title: "Maubeuge",
-                image: "./monthouy.jpg",
-                data: [{key: "Batiment 7", capacityInstant: 100, capacityMax: 200}, {
-                    key: "Batiment 8",
-                    capacityInstant: 80,
-                    capacityMax: 200
-                }, {key: "Batiment 9", capacityInstant: 20, capacityMax: 20}, {
-                    key: "Batiment 10",
-                    capacityInstant: 50,
-                    capacityMax: 100
-                }]
-            }
-        ];
-
+        this.placeList = [];
 
         this.state = {
           location: null,
