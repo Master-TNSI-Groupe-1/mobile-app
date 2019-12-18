@@ -17,10 +17,10 @@ export default class ListBatiments extends Component {
         this.arrayholder = [];
     }
 
-    static navigationOptions = ({ navigation }) => {
+    static navigationOptions = ({navigation}) => {
         return {
             title: navigation.getParam('site') + ': bâtiments',
-          };
+        };
     };
 
     componentDidMount() {
@@ -29,7 +29,8 @@ export default class ListBatiments extends Component {
             this.arrayholder = data.data;
             this.setState({
                 isLoading: false,
-                batiments: data.data});
+                batiments: data.data
+            });
         });
     }
 
@@ -37,15 +38,15 @@ export default class ListBatiments extends Component {
     SearchFilterFunction(searchedWord) {
         let listFiltered = this.arrayholder.filter((item) => item.name.toUpperCase().includes(searchedWord.toUpperCase()));
         this.setState({
-          search: searchedWord,
-          batiments: listFiltered
+            search: searchedWord,
+            batiments: listFiltered
         });
     }
 
-    getBatiments(idSite){
+    getBatiments(idSite) {
         return fetch(this.batimentsURL + idSite)
-        .then((response) => response.json())
-        .catch((error) => console.error(error))
+            .then((response) => response.json())
+            .catch((error) => console.error(error))
     }
 
     onRefresh = () => {
@@ -111,7 +112,6 @@ export default class ListBatiments extends Component {
 }
 
 
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -120,33 +120,33 @@ const styles = StyleSheet.create({
         padding: 10,
         fontSize: 18,
         height: 44,
-        borderBottomWidth: 1
+        textDecorationLine: 'underline'
     },
     row: {
         flexDirection: 'row',
-        paddingBottom:10,
-        borderBottomWidth:0.4,
-        borderLeftWidth:0.2,
-        borderRightWidth:0.2,
+        paddingBottom: 10,
+        borderBottomWidth: 0.4,
+        borderLeftWidth: 0.2,
+        borderRightWidth: 0.2,
         marginHorizontal: 15,
         borderStyle: 'solid',
     },
-    titleDetail : {
+    titleDetail: {
         color: '#fff',
-        paddingTop:'7%',
+        paddingTop: '7%',
         textAlign: 'center',
         fontSize: 20,
         backgroundColor: '#74b9ff',
         height: '11%',
-        width:'100%',
+        width: '100%',
     },
-    niv2:{
-        marginTop:12,
-        fontSize:16,
+    niv2: {
+        marginTop: 12,
+        fontSize: 16,
     },
-    link:{
+    link: {
         marginTop: 5,
-        fontSize:16,
+        fontSize: 16,
         color: 'blue',
         textDecorationLine: 'underline'
     },
