@@ -4,19 +4,23 @@ import {SafeAreaView,ScrollView,StyleSheet, Text, View, Alert,Div } from 'react-
 
 export default class DetailsItem extends React.Component {
    
-  render() {  const Detail = this.props.Detail
+  render() {  
+    
+    const detail = this.props.Detail
     return (
       <SafeAreaView style={styles.container}>
       <ScrollView>
 
           <View style={styles.row}>
 
-               <Text style={styles.heure} >{Detail.hour}</Text>
+               <Text style={styles.heure} >{detail.heure}</Text>
                <View>
                   <Text style={styles.primaryText}>
-                  {Detail.information_1}
-                 </Text>
-                 <Text style={styles.secondaryText}>{Detail.information_2}</Text>
+                    flux estimé à : {detail.estimation}
+                  </Text>
+                  <Text style={styles.secondaryText}>
+                    Capacité : {(detail.estimation * detail.user_max) / 100 }/{detail.user_max}
+                  </Text>
                </View>
               
                </View>

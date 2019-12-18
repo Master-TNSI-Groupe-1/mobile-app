@@ -6,16 +6,37 @@ import DetailsItem from './DetailsItem';
 export default class DetailslieuScreen extends React.Component {
   constructor() {
     super();
+    this.url = 'http://3.87.54.32/get/previsions/';
     this.state = {
       isRefreshing: false,
+      data: [],
     }
 
-}
+  }
 /*static navigationOptions = ({ navigation }) => {
     return {
        // title: navigation.getParam('place'),
       };
 };*/
+
+  componentDidMount() {
+    const idSite = 3;//this.props.navigation.getParam('id');
+    this.getPrevisionsByBatiment(idSite).then(data => {
+        // console.log('previsions', JSON.parse(data.data[0].json_object))
+        const parsedData = JSON.parse(data.data[0].json_object);
+        this.arrayholder = parsedData.data;
+        this.setState({
+            isLoading: false,
+            data: parsedData.data
+        });
+    });
+  }
+
+  getPrevisionsByBatiment(idSite) {
+    return fetch(this.url + idSite)
+        .then((response) => response.json())
+        .catch((error) => console.error(error))
+  }
 
   render() {
     const place = this.props.navigation.getParam('location');
@@ -39,8 +60,8 @@ export default class DetailslieuScreen extends React.Component {
                  }
                 >
                   <FlatList
-                      data={info_lieu}
-                      keyExtractor={(item) => item.id.toString()}
+                      data={this.state.data}
+                      keyExtractor={x => x.id}
                       renderItem={({item}) => <DetailsItem Detail={item}/>
                       }
                   /> 

@@ -123,7 +123,7 @@ class HomeScreen extends React.Component {
     updateLocationBackground = async () => {
       await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
         accuracy: Location.Accuracy.Balanced,
-        distanceInterval: 0.5,
+        distanceInterval: 1,
         showsBackgroundLocationIndicator: false,
       })
     };
@@ -250,39 +250,3 @@ const styles = StyleSheet.create({
         margin: 5,      
     }
 });
-
-/*
-                <View style={styles.list}>
-                    {
-                        this.state.data.map((value, key) => {
-                            return <Button key={key}
-                              style={styles.button}
-                              title={value.title}
-                              onPress={() => navigate('Batiments', {location: value.title, data: value})}
-                            />
-                        })
-                    }
-                </View>
-
-                 <FlatList data={this.state.data}
-                    renderItem={({item}) =>  
-                        <Text style={styles.item} onPress={() => navigate('Batiments', {location: item.title, data: item})}> {item.title} </Text>
-                    }
-                />  
-
-                            <View>{
-                this.state.data.map((value, key) => {
-                    return  <TouchableHighlight
-                    style={styles.button}
-                    key={key}
-                    onPress={() => navigate('Batiments', {location: value.title, data: value})}
-                   >
-                        <Image
-                   style={styles.button}
-                   source={require('./monthouy.jpg')}
-                 />
-                   </TouchableHighlight>
-                })
-                }
-            </View>
-                */
