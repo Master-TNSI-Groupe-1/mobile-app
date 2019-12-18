@@ -81,7 +81,7 @@ export default class ListBatiments extends Component {
                             data={this.state.batiments}
                             renderItem={ ({item}) =>
                                 <View style={styles.row}>
-                                    <View style={{flex:1}}>
+                                    <View style={styles.column}>
                                     <Text onPress={() => {
                                         Alert.alert(`${item.name}`,
                                             'details du batiments',
@@ -96,7 +96,7 @@ export default class ListBatiments extends Component {
                                     }}style={styles.item} >{item.name} : </Text>
                                     </View>
 
-                                    <View style={{flex:1}}>
+                                    <View style={styles.column}>
                                         <Text style={styles.niv2} >Instantané: {item.number_user}/{item.number_places}</Text>
                                         <Text style={styles.link} onPress={() => {navigate('Detailslieu', {location: item.name, data: item})}}>Afficher plus d'horaires</Text>
                                         <Text style={styles.link} onPress={() => {navigate('Parameter', {location: item.name, data: item})}}>Être notifié</Text>
@@ -116,6 +116,9 @@ export default class ListBatiments extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    column: {
+        flex:1,
     },
     item: {
         padding: 10,
