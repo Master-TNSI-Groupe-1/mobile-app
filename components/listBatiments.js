@@ -81,6 +81,7 @@ export default class ListBatiments extends Component {
 
                         </View>
                     }
+                    keyExtractor={(item, index) => index.toString()}
                 />
             </View>
         );
