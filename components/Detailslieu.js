@@ -44,6 +44,7 @@ export default class DetailslieuScreen extends React.Component {
 
     const onRefresh = () => {
       this.setState({isRefreshing: true});
+      this.componentDidMount();
       setTimeout(() => {
         this.setState({isRefreshing: false});
       }, 2000);
