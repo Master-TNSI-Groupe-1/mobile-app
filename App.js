@@ -4,10 +4,18 @@ import {StyleSheet, Text, View, Alert, FlatList, TouchableHighlight, Image} from
 import {Button} from 'react-native-elements';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
+import Constants from 'expo-constants';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
+import * as TaskManager from 'expo-task-manager';
 import ParameterScreen from './components/ParameterView';
 import ListBatiments from './components/listBatiments';
 import DetailslieuScreen from './components/Detailslieu';
 import { SearchBar } from 'react-native-elements';
+
+
+/**constantes */
+const LOCATION_TASK_NAME = 'background-location-task';
 
 
 import registerForPushNotificationsAsync from './components/notifications';
@@ -16,10 +24,6 @@ import registerForPushNotificationsAsync from './components/notifications';
   Quickstart fonctionnel.
 */
 class HomeScreen extends React.Component {
-    componentDidMount() {
-        registerForPushNotificationsAsync();
-
-    }
 
     constructor() {
         super();
@@ -61,6 +65,8 @@ class HomeScreen extends React.Component {
 
 
         this.state = {
+          location: null,
+          errorMessage: null, 
           search: '',
           data: []
         };
@@ -74,6 +80,52 @@ class HomeScreen extends React.Component {
 
     static navigationOptions = {
         title: 'Lieux',
+    }
+
+    // componentDidMount() {
+    //   navigator.geolocation.getCurrentPosition(
+    //     position => {
+    //       const location = JSON.stringify(position);
+    //       this.setState({ cords: location });
+    //       // console.log(this.state.cords);
+    //     },
+    //     error => Alert.alert(error.message),
+    //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    //   );
+    // }
+
+
+    componentDidMount() {
+      registerForPushNotificationsAsync();
+      if (Platform.OS === 'android' && !Constants.isDevice) {
+        this.setState({
+          errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+        });
+      } else {
+        this.getLocationAsync();
+        this.updateLocationBackground();
+      }
+    }
+
+    getLocationAsync = async () => {
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== 'granted') {
+        this.setState({
+          errorMessage: 'Permission to access location was denied',
+        });
+      }
+  
+      const location = await Location.getCurrentPositionAsync({});
+      this.setState({ location: JSON.stringify(location) });
+      console.log('location', this.state.location)
+    };
+
+    updateLocationBackground = async () => {
+      await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+        accuracy: Location.Accuracy.Balanced,
+        distanceInterval: 0.5,
+        showsBackgroundLocationIndicator: false,
+      })
     };
 
     SearchFilterFunction(searchedWord) {
@@ -96,15 +148,15 @@ class HomeScreen extends React.Component {
         const { search } = this.state;
         return (
             <View style={styles.main}>
-                                <View style={styles.titleContainer}>
+                <View style={styles.titleContainer}>
                   <Text style={styles.title}>Liste des sites !</Text>
                 </View>
                 <SearchBar
-            placeholder="Rechercher un lieu"
-            onChangeText={search => this.SearchFilterFunction(search)}
-            value={search}
-            lightTheme
-            />
+                  placeholder="Rechercher un lieu"
+                  onChangeText={search => this.SearchFilterFunction(search)}
+                  value={search}
+                  lightTheme
+                />
               <View style={styles.list}>
                     {
 
@@ -117,6 +169,13 @@ class HomeScreen extends React.Component {
                         })
                     }
                 </View>
+                <View style={styles.container}>
+                  {/* <TouchableOpacity onPress={this.onPress}>
+                    <Text>Activer la géo-localisation en arrière plan!</Text>
+                  </TouchableOpacity> */}
+                  <Text style={styles.paragraph}>Cordonnées gps: {this.state.location}</Text>
+                </View>
+
             </View>
         );
     }
@@ -134,6 +193,17 @@ const App = createAppContainer(MainNavigator);
 
 export default App;
 
+
+TaskManager.defineTask(LOCATION_TASK_NAME, ({ data: { locations }, error }) => {
+  if (error) {
+    // Error occurred - check `error.message` for more details.
+    console.log('error',error)
+    return;
+  }
+  // this.setState({ location: JSON.stringify(location) });
+  console.log('Received new locations ' + new Date(), locations);
+});
+
 const styles = StyleSheet.create({
     main: {
         width: '100%',
@@ -144,7 +214,8 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         backgroundColor: '#74b9ff',
-        height: '11%'
+        height: '11%',
+        marginBottom: '5%'
     },
     title: {
         marginTop: '7%',
@@ -156,7 +227,12 @@ const styles = StyleSheet.create({
         padding: '0%',
         alignItems: 'center',
         width: '100%',
-        height: '30%'
+        height: '30%',
+    },
+    paragraph: {
+      margin: 24,
+      fontSize: 18,
+      textAlign: 'center',
     },
     item: {  
         padding: 10,  
@@ -170,7 +246,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttonSize: {
-        paddingTop: '5%'
+        paddingTop: '5%',  
+        margin: 5,      
     }
 });
 

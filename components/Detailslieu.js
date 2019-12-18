@@ -1,14 +1,14 @@
 import React from 'react';
-import { FlatList,SafeAreaView,ScrollView,SectionList,StyleSheet, Text, View, Alert,Div } from 'react-native';
-import { Button } from 'react-native-elements';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { FlatList,SafeAreaView,ScrollView,RefreshControl,SectionList,StyleSheet, Text, View, Alert,Div } from 'react-native';
 import info_lieu from '../Helpers/info_lieu';
 import DetailsItem from './DetailsItem';
 
 export default class DetailslieuScreen extends React.Component {
   constructor() {
     super();
+    this.state = {
+      isRefreshing: false,
+    }
 
 }
 /*static navigationOptions = ({ navigation }) => {
@@ -20,19 +20,34 @@ export default class DetailslieuScreen extends React.Component {
   render() {
     const place = this.props.navigation.getParam('location');
     //var place = JSON.stringify(navigation.getParam('location'));
+
+    const onRefresh = () => {
+      this.setState({isRefreshing: true});
+      setTimeout(() => {
+        this.setState({isRefreshing: false});
+      }, 2000);
+    }
+
     return (
     <View style={styles.main}>
-    <Text style={styles.titleDetail}>Plus de Details pour: {place}</Text>
-          <View style={styles.flatListContainer}>
-            <FlatList
-                data={info_lieu}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({item}) => <DetailsItem Detail={item}/>
-                }
-            />     
-          </View>
-        
-             </View>
+      <Text style={styles.titleDetail}>Plus de Details pour: {place}</Text>
+            <View style={styles.flatListContainer}>
+              <ScrollView
+                 contentContainerStyle={styles.scrollView}
+                 refreshControl={
+                   <RefreshControl refreshing={this.state.isRefreshing} onRefresh={onRefresh} />
+                 }
+                >
+                  <FlatList
+                      data={info_lieu}
+                      keyExtractor={(item) => item.id.toString()}
+                      renderItem={({item}) => <DetailsItem Detail={item}/>
+                      }
+                  /> 
+              </ScrollView>    
+            </View>
+          
+    </View>
 
     );
   }
