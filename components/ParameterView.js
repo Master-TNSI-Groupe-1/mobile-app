@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Slider,Button } from 'react-native';
+import registerForPushNotificationsAsync from './notifications.js';
 
 export default class ParameterScreen extends React.Component {
   constructor() {
@@ -12,29 +13,36 @@ export default class ParameterScreen extends React.Component {
     };
 
   }
-  
+    componentDidMount() {
+
+    }
+
   static navigationOptions = {
     title: 'Flux App Monitoring',
   };
 
   render() {
     const {navigation} = this.props;
+
+    var id =  navigation.getParam('id_location');
+
+    //console.log('id received ' , id);
     var place = JSON.stringify(navigation.getParam('location', 'Place not selected'))
     return (
       <View style={styles.main}>
 
       <Text style={styles.titleDetail}>Le lieu selectionné est {place}</Text>
-        
+
         <View style={styles.sliderView}>
           <Text style={styles.sliderTitle}>Heures mini: {this.state.minTimeValue} H:</Text>
           <Slider
               style={styles.slider}
               value={this.state.minTimeValue}
               onValueChange={value => this.setState(previousState => (
-                { 
+                {
                   minTimeValue: value,
                   maxTimeValue: previousState.maxTimeValue,
-                  flowValue: previousState.flowValue 
+                  flowValue: previousState.flowValue
                 }
               ))}
               style={{width: 260, height: 40}}
@@ -49,10 +57,10 @@ export default class ParameterScreen extends React.Component {
               style={styles.slider}
               value={this.state.maxTimeValue}
               onValueChange={value => this.setState(previousState => (
-                { 
+                {
                   minTimeValue: previousState.minTimeValue,
                   maxTimeValue: value,
-                  flowValue: previousState.flowValue 
+                  flowValue: previousState.flowValue
                 }
                 ))}
               style={{width: 260, height: 40}}
@@ -67,7 +75,7 @@ export default class ParameterScreen extends React.Component {
               style={styles.slider}
               value={this.state.minFlowValue}
               onValueChange={value => { this.setState(previousState => (
-                { 
+                {
                   minTimeValue: previousState.minTimeValue,
                   maxTimeValue: previousState.maxTimeValue,
                   minFlowValue: value,
@@ -86,11 +94,11 @@ export default class ParameterScreen extends React.Component {
               style={styles.slider}
               value={this.state.maxFlowValue}
               onValueChange={value => { this.setState(previousState => (
-                { 
+                {
                   minTimeValue: previousState.minTimeValue,
                   maxTimeValue: previousState.maxTimeValue,
                   minFlowValue: previousState.minFlowValue,
-                  maxFlowValue: value 
+                  maxFlowValue: value
                 }
               ))}}
               style={{width: 260, height: 40}}
@@ -102,16 +110,17 @@ export default class ParameterScreen extends React.Component {
           </Slider>
           <View style={styles.containerbuttonSize}>
           <View style={styles.buttonSize}>
-              <Button 
+              <Button
                 onPress={() => {
-                  alert(JSON.stringify(this.state))}}
+                  registerForPushNotificationsAsync(id,this.state.minTimeValue,this.state.maxTimeValue,
+                      this.state.minFlowValue,this.state.maxFlowValue, this);}}
                 title="Valider"
                 color="#fff"
              />
            </View>
            </View>
         </View>
-       
+
       </View>
     );
   }
@@ -122,7 +131,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
 
-  },    
+  },
 titleDetail : {
   color: '#fff',
   paddingTop:'7%',
@@ -155,13 +164,13 @@ titleDetail : {
     fontSize: 16
   },
   sliderView : {
-    width: '100%', 
+    width: '100%',
     height: '100%',
     marginTop: '15%',
     alignItems: 'center'
   },
   slider : {
-    width: 300, 
+    width: 300,
     height: 40
   },
   container: {

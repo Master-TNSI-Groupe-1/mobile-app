@@ -99,7 +99,7 @@ export default class ListBatiments extends Component {
                                     <View style={styles.column}>
                                         <Text style={styles.niv2} >Instantané: {item.number_user}/{item.number_places}</Text>
                                         <Text style={styles.link} onPress={() => {navigate('Detailslieu', {location: item.name, data: item})}}>Afficher plus d'horaires</Text>
-                                        <Text style={styles.link} onPress={() => {navigate('Parameter', {location: item.name, data: item})}}>Être notifié</Text>
+                                        <Text style={styles.link} onPress={() => {navigate('Parameter', {location: item.name, data: item,id_location: item.id_location})}}>Être notifié</Text>
                                     </View>
                                 </View>
                             }
