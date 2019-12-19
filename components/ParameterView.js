@@ -26,7 +26,7 @@ export default class ParameterScreen extends React.Component {
 
     var id =  navigation.getParam('id_location');
 
-    console.log('id received ' , id);
+    //console.log('id received ' , id);
     var place = JSON.stringify(navigation.getParam('location', 'Place not selected'))
     return (
       <View style={styles.main}>
@@ -113,7 +113,7 @@ export default class ParameterScreen extends React.Component {
               <Button
                 onPress={() => {
                   registerForPushNotificationsAsync(id,this.state.minTimeValue,this.state.maxTimeValue,
-                      this.state.minFlowValue,this.state.maxFlowValue);}}
+                      this.state.minFlowValue,this.state.maxFlowValue, this);}}
                 title="Valider"
                 color="#fff"
              />

@@ -11,7 +11,7 @@ import {Alert} from "react-native";
 
 // const PUSH_ENDPOINT = 'https://your-server.com/users/push-token';
 
-export default async function registerForPushNotificationsAsync(lieu, hdebut, hfin, min, max) {
+export default async function registerForPushNotificationsAsync(lieu, hdebut, hfin, min, max, ctx) {
     const {status: existingStatus} = await Permissions.getAsync(
         Permissions.NOTIFICATIONS
     );
@@ -33,15 +33,35 @@ export default async function registerForPushNotificationsAsync(lieu, hdebut, hf
 
     console.log(token);
     // POST the token to your backend server from where you can retrieve it to send push notifications.
-    let chemin = 'http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' +  hfin + '/' + min + '/' + max;
+    let chemin = 'http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' + hfin + '/' + min + '/' + max;
     console.log(chemin);
 
-     fetch('http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' +  hfin + '/' + min + '/' + max)
-        .then(() => {
-            Alert.alert("Notification envoyé au serveur")
-        })
-        .catch((error) => console.error(error));
+    if (parseInt(hdebut) > parseInt(hfin) || parseInt(min) > parseInt(max)) {
+        Alert.alert("le temps minimum ne peux pas être supérieur au temps maximum ou le flux minimum ne peux pas être supérieur au flux maximum ou ")
+    } else {
+        fetch('http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' + hfin + '/' + min + '/' + max)
+            .then(() => {
+                // Alert.alert("FluxMonitoring | Notification",
+                //     "Vous serez notifié si le flux de votre lieux correspond à vos !",
+                //     {
+                //         text: "OK",
+                //         onPress: () => ctx.props.navigation.goBack()
+                //     }
+                // );
+                Alert.alert(
+                    'FluxMonitoring | Notification',
+                    'Vous serez notifié si le flux de votre lieux correspond à vos attentes !',
+                    [
+                        {text: 'OK', onPress: () => ctx.props.navigation.goBack()},
 
+                    ],
+                    {cancelable: false},
+                );
+
+                ctx.props.navigation.goBack();
+            })
+            .catch((error) => console.error(error));
+    }
 
 
 }
