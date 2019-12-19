@@ -57,20 +57,19 @@ export default class DetailslieuScreen extends React.Component {
     <View style={styles.main}>
       <Text style={styles.titleDetail}>Plus de Details pour: {place}</Text>
             <View style={styles.flatListContainer}>
-            <SafeAreaView style={styles.container}>
-                <ScrollView
-                  contentContainerStyle={styles.scrollView}
-                  refreshControl={
-                    <RefreshControl refreshing={this.state.isRefreshing} onRefresh={onRefresh} />
-                  }
-                  >
+            <SafeAreaView style={{flex: 0}} >
+              
                     <FlatList
+                    contentContainerStyle={styles.scrollView}
+                    refreshControl={
+                      <RefreshControl refreshing={this.state.isRefreshing} onRefresh={onRefresh} />
+                    }
                         data={this.state.data}
-                        keyExtractor={x => x.id_location}
+                        keyExtractor={item => item.id_location}
                         renderItem={({item}) => <DetailsItem Detail={item}/>
                         }
                     /> 
-                </ScrollView>  
+             
               </SafeAreaView>  
             </View>
           

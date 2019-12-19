@@ -72,16 +72,15 @@ export default class ListBatiments extends Component {
                         round
                         lightTheme
                     />
-                    <SafeAreaView style={{flex: 1}}>
-                        <ScrollView
-                            contentContainerStyle={styles.scrollView}
-                            refreshControl={
-                            <RefreshControl refreshing={this.state.isRefreshing} onRefresh={this.onRefresh} />
-                            }
-                        >
+                    <SafeAreaView style={{flex: 0}}>
+                     
                         <FlatList
+                          contentContainerStyle={styles.scrollView}
+                          refreshControl={
+                          <RefreshControl refreshing={this.state.isRefreshing} onRefresh={this.onRefresh} />
+                          }
                             data={this.state.batiments}
-                            keyExtractor={x => x.id_site}
+                            keyExtractor={item => item.id_site}
                             renderItem={ ({item}) =>
                                 <View style={styles.row}>
                                     <View style={styles.column}>
@@ -108,7 +107,7 @@ export default class ListBatiments extends Component {
                             }
                             keyExtractor={item => item.id_location}
                         />
-                        </ScrollView>
+                        
                     </SafeAreaView>
                 </View>
         );
