@@ -81,7 +81,7 @@ export default class ListBatiments extends Component {
                         >
                         <FlatList
                             data={this.state.batiments}
-                            keyExtractor={x => x.id_site}
+                            keyExtractor={x => x.id_location}
                             renderItem={ ({item}) =>
                                 <View style={styles.row}>
                                     <View style={styles.column}>
@@ -106,7 +106,6 @@ export default class ListBatiments extends Component {
                                     </View>
                                 </View>
                             }
-                            keyExtractor={item => item.id_location}
                         />
                         </ScrollView>
                     </SafeAreaView>
