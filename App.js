@@ -41,7 +41,7 @@ class HomeScreen extends React.Component {
 
         this.state = {
           location: null,
-          errorMessage: null, 
+          errorMessage: null,
           search: '',
           data: []
         };
@@ -71,8 +71,8 @@ class HomeScreen extends React.Component {
 
 
     componentDidMount() {
-      // this.getToken();
-      registerForPushNotificationsAsync();
+      this.getToken();
+      // registerForPushNotificationsAsync();
       if (Platform.OS === 'android' && !Constants.isDevice) {
         this.setState({
           errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -95,9 +95,9 @@ class HomeScreen extends React.Component {
           errorMessage: 'Permission to access location was denied',
         });
       }
-  
+
       const location = await Location.getCurrentPositionAsync({});
-      console.log('coords',location.coords.longitude);
+      // console.log('coords',location.coords.longitude);
       this.setState({ location: JSON.stringify(location) });
       wsFlux.user = '';
       wsFlux.geoposition.longitude = location.coords.longitude;
@@ -234,11 +234,11 @@ const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: 'center',
     },
-    item: {  
-        padding: 10,  
-        fontSize: 18,  
-        height: 44,  
-    }, 
+    item: {
+        padding: 10,
+        fontSize: 18,
+        height: 44,
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttonSize: {
-        paddingTop: '5%',  
-        margin: 5,      
+        paddingTop: '5%',
+        margin: 5,
     }
 });
