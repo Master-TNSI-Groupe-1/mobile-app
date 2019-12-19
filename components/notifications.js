@@ -34,20 +34,14 @@ export default async function registerForPushNotificationsAsync(lieu, hdebut, hf
     console.log(token);
     // POST the token to your backend server from where you can retrieve it to send push notifications.
     let chemin = 'http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' + hfin + '/' + min + '/' + max;
-    console.log(chemin);
+   // console.log(chemin);
 
     if (parseInt(hdebut) > parseInt(hfin) || parseInt(min) > parseInt(max)) {
         Alert.alert("le temps minimum ne peux pas être supérieur au temps maximum ou le flux minimum ne peux pas être supérieur au flux maximum ou ")
     } else {
         fetch('http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' + hfin + '/' + min + '/' + max)
             .then(() => {
-                // Alert.alert("FluxMonitoring | Notification",
-                //     "Vous serez notifié si le flux de votre lieux correspond à vos !",
-                //     {
-                //         text: "OK",
-                //         onPress: () => ctx.props.navigation.goBack()
-                //     }
-                // );
+
                 Alert.alert(
                     'FluxMonitoring | Notification',
                     'Vous serez notifié si le flux de votre lieux correspond à vos attentes !',
@@ -57,8 +51,6 @@ export default async function registerForPushNotificationsAsync(lieu, hdebut, hf
                     ],
                     {cancelable: false},
                 );
-
-                ctx.props.navigation.goBack();
             })
             .catch((error) => console.error(error));
     }
