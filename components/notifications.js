@@ -1,5 +1,6 @@
-import { Notifications } from 'expo';
+import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
+import {Alert} from "react-native";
 
 /**
  * Envoie une notification au terminal
@@ -10,15 +11,15 @@ import * as Permissions from 'expo-permissions';
 
 // const PUSH_ENDPOINT = 'https://your-server.com/users/push-token';
 
-export default async function registerForPushNotificationsAsync() {
-    const { status: existingStatus } = await Permissions.getAsync(
+export default async function registerForPushNotificationsAsync(lieu, hdebut, hfin, min, max) {
+    const {status: existingStatus} = await Permissions.getAsync(
         Permissions.NOTIFICATIONS
     );
     let finalStatus = existingStatus;
 
 
     if (existingStatus !== 'granted') {
-        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        const {status} = await Permissions.askAsync(Permissions.NOTIFICATIONS);
         finalStatus = status;
     }
 
@@ -29,22 +30,18 @@ export default async function registerForPushNotificationsAsync() {
 
 
     let token = await Notifications.getExpoPushTokenAsync();
-    console.log(token);
 
+    console.log(token);
     // POST the token to your backend server from where you can retrieve it to send push notifications.
-    // return fetch(PUSH_ENDPOINT, {
-    //     method: 'POST',
-    //     headers: {
-    //         Accept: 'application/json',
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         token: {
-    //             value: token,
-    //         },
-    //         user: {
-    //             username: 'Brent',
-    //         },
-    //     }),
-    // });
+    let chemin = 'http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' +  hfin + '/' + min + '/' + max;
+    console.log(chemin);
+
+     fetch('http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' +  hfin + '/' + min + '/' + max)
+        .then(() => {
+            Alert.alert("Notification envoyé au serveur")
+        })
+        .catch((error) => console.error(error));
+
+
+
 }

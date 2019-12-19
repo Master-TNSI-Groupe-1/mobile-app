@@ -32,7 +32,7 @@ class HomeScreen extends React.Component {
 
         this.state = {
           location: null,
-          errorMessage: null, 
+          errorMessage: null,
           search: '',
           data: []
         };
@@ -62,7 +62,7 @@ class HomeScreen extends React.Component {
 
 
     componentDidMount() {
-      registerForPushNotificationsAsync();
+      //registerForPushNotificationsAsync();
       if (Platform.OS === 'android' && !Constants.isDevice) {
         this.setState({
           errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -80,7 +80,7 @@ class HomeScreen extends React.Component {
           errorMessage: 'Permission to access location was denied',
         });
       }
-  
+
       const location = await Location.getCurrentPositionAsync({});
       this.setState({ location: JSON.stringify(location) });
       console.log('location', this.state.location)
@@ -200,11 +200,11 @@ const styles = StyleSheet.create({
       fontSize: 18,
       textAlign: 'center',
     },
-    item: {  
-        padding: 10,  
-        fontSize: 18,  
-        height: 44,  
-    }, 
+    item: {
+        padding: 10,
+        fontSize: 18,
+        height: 44,
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttonSize: {
-        paddingTop: '5%',  
-        margin: 5,      
+        paddingTop: '5%',
+        margin: 5,
     }
 });
 
@@ -231,10 +231,10 @@ const styles = StyleSheet.create({
                 </View>
 
                  <FlatList data={this.state.data}
-                    renderItem={({item}) =>  
+                    renderItem={({item}) =>
                         <Text style={styles.item} onPress={() => navigate('Batiments', {location: item.title, data: item})}> {item.title} </Text>
                     }
-                />  
+                />
 
                             <View>{
                 this.state.data.map((value, key) => {
