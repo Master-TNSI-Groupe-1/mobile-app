@@ -9,25 +9,26 @@ export default class DetailsItem extends React.Component {
     const detail = this.props.Detail
     return (
       <SafeAreaView style={styles.container}>
-      <ScrollView>
-
-          <View style={styles.row}>
-
-               <Text style={styles.heure} >{detail.heure}</Text>
-               <View>
+          <ScrollView>
+            { 
+              detail ? 
+              <View style={styles.row}>
+                <Text style={styles.heure} >{detail.heure}</Text>
+                <View>
                   <Text style={styles.primaryText}>
                     flux estimé à : {detail.estimation}
                   </Text>
                   <Text style={styles.secondaryText}>
-                    Capacité : {(parseInt(detail.estimation, 10) * parseInt(detail.user_max, 10)) / 100 }/{+detail.user_max}
+                    Capacité : {(parseInt(detail.estimation, 10) * parseInt(detail.user_max, 10)) / 100 }/{detail.user_max}
                   </Text>
-               </View>
-              
-               </View>
+                </View>             
+              </View> : <Text style={styles.paragraph}> Aucune prévisions pour ce batiment !</Text>
+           
+            }
             
-        
+            
           </ScrollView>
-   </SafeAreaView>
+      </SafeAreaView>
     );
   }
 }
@@ -50,7 +51,12 @@ const styles = StyleSheet.create({
     height:70,
     width:'100%',
   },
-
+    paragraph: {
+      margin: 24,
+      fontSize: 22,
+      textAlign: 'center',
+      color: 'red',
+  },
    row: { 
      flexDirection: 'row',
      alignItems: 'center',

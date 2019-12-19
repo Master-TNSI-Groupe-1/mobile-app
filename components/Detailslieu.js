@@ -20,15 +20,18 @@ export default class DetailslieuScreen extends React.Component {
 };*/
 
   componentDidMount() {
-    const idSite = 3;//this.props.navigation.getParam('id');
-    this.getPrevisionsByBatiment(idSite).then(data => {
+    const data = this.props.navigation.getParam('data');
+    // console.log('idSite',data.id_location);
+    this.getPrevisionsByBatiment(data.id_location).then(data => {
         // console.log('previsions', JSON.parse(data.data[0].json_object))
-        const parsedData = JSON.parse(data.data.json_object);
-        this.arrayholder = parsedData.data;
-        this.setState({
-            isLoading: false,
-            data: parsedData.data
-        });
+        if (data.data.json_object) {
+          const parsedData = JSON.parse(data.data.json_object);
+          this.arrayholder = parsedData.data;
+          this.setState({
+              isLoading: false,
+              data: parsedData.data
+          });
+        }
     });
   }
 
@@ -54,19 +57,21 @@ export default class DetailslieuScreen extends React.Component {
     <View style={styles.main}>
       <Text style={styles.titleDetail}>Plus de Details pour: {place}</Text>
             <View style={styles.flatListContainer}>
-              <ScrollView
-                 contentContainerStyle={styles.scrollView}
-                 refreshControl={
-                   <RefreshControl refreshing={this.state.isRefreshing} onRefresh={onRefresh} />
-                 }
-                >
-                  <FlatList
-                      data={this.state.data}
-                      keyExtractor={x => x.id}
-                      renderItem={({item}) => <DetailsItem Detail={item}/>
-                      }
-                  /> 
-              </ScrollView>    
+            <SafeAreaView style={styles.container}>
+                <ScrollView
+                  contentContainerStyle={styles.scrollView}
+                  refreshControl={
+                    <RefreshControl refreshing={this.state.isRefreshing} onRefresh={onRefresh} />
+                  }
+                  >
+                    <FlatList
+                        data={this.state.data}
+                        keyExtractor={x => x.id_location}
+                        renderItem={({item}) => <DetailsItem Detail={item}/>
+                        }
+                    /> 
+                </ScrollView>  
+              </SafeAreaView>  
             </View>
           
     </View>

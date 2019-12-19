@@ -26,6 +26,7 @@ export default class ListBatiments extends Component {
     componentDidMount() {
         const idSite = this.props.navigation.getParam('id');
         this.getBatiments(idSite).then(data => {
+            // console.log(data)
             this.arrayholder = data.data;
             this.setState({
                 isLoading: false,
@@ -71,14 +72,16 @@ export default class ListBatiments extends Component {
                         round
                         lightTheme
                     />
-                    <ScrollView
-                        contentContainerStyle={styles.scrollView}
-                        refreshControl={
-                        <RefreshControl refreshing={this.state.isRefreshing} onRefresh={this.onRefresh} />
-                        }
-                    >
+                    <SafeAreaView style={{flex: 1}}>
+                        <ScrollView
+                            contentContainerStyle={styles.scrollView}
+                            refreshControl={
+                            <RefreshControl refreshing={this.state.isRefreshing} onRefresh={this.onRefresh} />
+                            }
+                        >
                         <FlatList
                             data={this.state.batiments}
+                            keyExtractor={x => x.id_site}
                             renderItem={ ({item}) =>
                                 <View style={styles.row}>
                                     <View style={styles.column}>
@@ -105,7 +108,8 @@ export default class ListBatiments extends Component {
                             }
                             keyExtractor={item => item.id_location}
                         />
-                    </ScrollView>
+                        </ScrollView>
+                    </SafeAreaView>
                 </View>
         );
     }
