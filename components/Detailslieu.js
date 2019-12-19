@@ -35,7 +35,7 @@ export default class DetailslieuScreen extends React.Component {
                 currentId : id
             }
         });
-        console.log(updatedData);
+      //  console.log(updatedData);
           this.arrayholder = parsedData.data;
           this.setState({
               isLoading: false,
