@@ -26,6 +26,7 @@ export default class ListBatiments extends Component {
     componentDidMount() {
         const idSite = this.props.navigation.getParam('id');
         this.getBatiments(idSite).then(data => {
+            // console.log(data)
             this.arrayholder = data.data;
             this.setState({
                 isLoading: false,
@@ -59,6 +60,7 @@ export default class ListBatiments extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
+        const bat=this.props.navigation.getParam('site');
         return(
                 <View style={styles.container} >
                       <Text style={styles.titleDetail}>Batiments</Text>
@@ -71,14 +73,17 @@ export default class ListBatiments extends Component {
                         round
                         lightTheme
                     />
-                    <ScrollView
-                        contentContainerStyle={styles.scrollView}
-                        refreshControl={
-                        <RefreshControl refreshing={this.state.isRefreshing} onRefresh={this.onRefresh} />
-                        }
-                    >
+                    <SafeAreaView style={{flex: 0}}>
+                    {
+                         this.state.batiments ?
+                     
                         <FlatList
+                          contentContainerStyle={styles.scrollView}
+                          refreshControl={
+                          <RefreshControl refreshing={this.state.isRefreshing} onRefresh={this.onRefresh} />
+                          }
                             data={this.state.batiments}
+                            keyExtractor={item => item.id_site}
                             renderItem={ ({item}) =>
                                 <View style={styles.row}>
                                     <View style={styles.column}>
@@ -104,8 +109,10 @@ export default class ListBatiments extends Component {
                                 </View>
                             }
                             keyExtractor={item => item.id_location}
-                        />
-                    </ScrollView>
+                        />: <Text style={styles.paragraph}>Oups, Il y a aucun Batiments pour {bat}</Text>
+                    } 
+                        
+                    </SafeAreaView>
                 </View>
         );
     }
@@ -155,5 +162,11 @@ const styles = StyleSheet.create({
         color: 'blue',
         textDecorationLine: 'underline'
     },
+    paragraph: {
+        margin: 24,
+        fontSize: 18,
+        textAlign: 'center',
+        color:'#74b9ff',
+      },
 })
 

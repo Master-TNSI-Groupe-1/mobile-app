@@ -6,16 +6,50 @@ import DetailsItem from './DetailsItem';
 export default class DetailslieuScreen extends React.Component {
   constructor() {
     super();
+    this.url = 'http://3.87.54.32/get/previsions/';
     this.state = {
       isRefreshing: false,
+      data: [],
     }
 
-}
+  }
 /*static navigationOptions = ({ navigation }) => {
     return {
        // title: navigation.getParam('place'),
       };
 };*/
+
+  componentDidMount() {
+    const data = this.props.navigation.getParam('data');
+    // console.log('idSite',data.id_location);
+    
+    this.getPrevisionsByBatiment(data.id_location).then(data => {
+        // console.log('previsions', JSON.parse(data.data[0].json_object))
+        if (data.data.json_object) {
+          const parsedData = JSON.parse(data.data.json_object);
+          const updatedData = parsedData.data.map( (e,id) => {
+            return {
+                heure : e.heure,
+                estimation : e.estimation,
+                user_max:e.user_max,
+                currentId : id
+            }
+        });
+      //  console.log(updatedData);
+          this.arrayholder = parsedData.data;
+          this.setState({
+              isLoading: false,
+              data: updatedData
+          });
+        }
+    });
+  }
+
+  getPrevisionsByBatiment(idSite) {
+    return fetch(this.url + idSite)
+        .then((response) => response.json())
+        .catch((error) => console.error(error))
+  }
 
   render() {
     const place = this.props.navigation.getParam('location');
@@ -23,6 +57,7 @@ export default class DetailslieuScreen extends React.Component {
 
     const onRefresh = () => {
       this.setState({isRefreshing: true});
+      this.componentDidMount();
       setTimeout(() => {
         this.setState({isRefreshing: false});
       }, 2000);
@@ -32,19 +67,23 @@ export default class DetailslieuScreen extends React.Component {
     <View style={styles.main}>
       <Text style={styles.titleDetail}>Plus de Details pour: {place}</Text>
             <View style={styles.flatListContainer}>
-              <ScrollView
-                 contentContainerStyle={styles.scrollView}
-                 refreshControl={
-                   <RefreshControl refreshing={this.state.isRefreshing} onRefresh={onRefresh} />
-                 }
-                >
-                  <FlatList
-                      data={info_lieu}
-                      keyExtractor={(item) => item.id.toString()}
-                      renderItem={({item}) => <DetailsItem Detail={item}/>
-                      }
-                  /> 
-              </ScrollView>    
+            <SafeAreaView style={{flex: 0}} >
+            
+                    <FlatList
+                    contentContainerStyle={styles.scrollView}
+                    refreshControl={
+                      <RefreshControl refreshing={this.state.isRefreshing} onRefresh={onRefresh} />
+                    }
+                        data={this.state.data}
+                        keyExtractor={(item) => item.id}
+                       //keyExtractor={(item, index) => index}
+                        //keyExtractor={item => item.id_location}
+                        keyExtractor={(item, index) => ((data.length - index - 1).toString())}
+                        renderItem={({item}) => <DetailsItem Detail={item}/>
+                        }
+                    /> 
+             
+              </SafeAreaView>  
             </View>
           
     </View>
