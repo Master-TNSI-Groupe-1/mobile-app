@@ -19,7 +19,7 @@ export default class DetailsItem extends React.Component {
                     flux estimé à : {detail.estimation}
                   </Text>
                   <Text style={styles.secondaryText}>
-                    Capacité : {(detail.estimation * detail.user_max) / 100 }/{detail.user_max}
+                    Capacité : {(parseInt(detail.estimation, 10) * parseInt(detail.user_max, 10)) / 100 }/{+detail.user_max}
                   </Text>
                </View>
               

@@ -23,7 +23,7 @@ export default class DetailslieuScreen extends React.Component {
     const idSite = 3;//this.props.navigation.getParam('id');
     this.getPrevisionsByBatiment(idSite).then(data => {
         // console.log('previsions', JSON.parse(data.data[0].json_object))
-        const parsedData = JSON.parse(data.data[0].json_object);
+        const parsedData = JSON.parse(data.data.json_object);
         this.arrayholder = parsedData.data;
         this.setState({
             isLoading: false,
