@@ -1,5 +1,6 @@
-import { Notifications } from 'expo';
+import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
+import {Alert} from "react-native";
 
 /**
  * Envoie une notification au terminal
@@ -10,15 +11,15 @@ import * as Permissions from 'expo-permissions';
 
 // const PUSH_ENDPOINT = 'https://your-server.com/users/push-token';
 
-export default async function registerForPushNotificationsAsync() {
-    const { status: existingStatus } = await Permissions.getAsync(
+export default async function registerForPushNotificationsAsync(lieu, hdebut, hfin, min, max, ctx) {
+    const {status: existingStatus} = await Permissions.getAsync(
         Permissions.NOTIFICATIONS
     );
     let finalStatus = existingStatus;
 
 
     if (existingStatus !== 'granted') {
-        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        const {status} = await Permissions.askAsync(Permissions.NOTIFICATIONS);
         finalStatus = status;
     }
 
@@ -29,22 +30,30 @@ export default async function registerForPushNotificationsAsync() {
 
 
     let token = await Notifications.getExpoPushTokenAsync();
-    console.log(token);
 
+    console.log(token);
     // POST the token to your backend server from where you can retrieve it to send push notifications.
-    // return fetch(PUSH_ENDPOINT, {
-    //     method: 'POST',
-    //     headers: {
-    //         Accept: 'application/json',
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         token: {
-    //             value: token,
-    //         },
-    //         user: {
-    //             username: 'Brent',
-    //         },
-    //     }),
-    // });
+    let chemin = 'http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' + hfin + '/' + min + '/' + max;
+   // console.log(chemin);
+
+    if (parseInt(hdebut) > parseInt(hfin) || parseInt(min) > parseInt(max)) {
+        Alert.alert("le temps minimum ne peux pas être supérieur au temps maximum ou le flux minimum ne peux pas être supérieur au flux maximum ou ")
+    } else {
+        fetch('http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' + hfin + '/' + min + '/' + max)
+            .then(() => {
+
+                Alert.alert(
+                    'FluxMonitoring | Notification',
+                    'Vous serez notifié si le flux de votre lieux correspond à vos attentes !',
+                    [
+                        {text: 'OK', onPress: () => ctx.props.navigation.goBack()},
+
+                    ],
+                    {cancelable: false},
+                );
+            })
+            .catch((error) => console.error(error));
+    }
+
+
 }
