@@ -60,6 +60,7 @@ export default class ListBatiments extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
+        const bat=this.props.navigation.getParam('site');
         return(
                 <View style={styles.container} >
                       <Text style={styles.titleDetail}>Batiments</Text>
@@ -73,6 +74,8 @@ export default class ListBatiments extends Component {
                         lightTheme
                     />
                     <SafeAreaView style={{flex: 0}}>
+                    {
+                         this.state.batiments ?
                      
                         <FlatList
                           contentContainerStyle={styles.scrollView}
@@ -106,7 +109,8 @@ export default class ListBatiments extends Component {
                                 </View>
                             }
                             keyExtractor={item => item.id_location}
-                        />
+                        />: <Text style={styles.paragraph}>Oups, Il y a aucun Batiments pour {bat}</Text>
+                    } 
                         
                     </SafeAreaView>
                 </View>
@@ -158,5 +162,11 @@ const styles = StyleSheet.create({
         color: 'blue',
         textDecorationLine: 'underline'
     },
+    paragraph: {
+        margin: 24,
+        fontSize: 18,
+        textAlign: 'center',
+        color:'#74b9ff',
+      },
 })
 
