@@ -1,5 +1,16 @@
-import React, { Component } from 'react';
-import { FlatList,SafeAreaView,ScrollView,RefreshControl,SectionList,StyleSheet, Text, View, Alert,Div } from 'react-native';
+import React, {Component} from 'react';
+import {
+    FlatList,
+    SafeAreaView,
+    ScrollView,
+    RefreshControl,
+    SectionList,
+    StyleSheet,
+    Text,
+    View,
+    Alert,
+    Div
+} from 'react-native';
 import {SearchBar} from "react-native-elements";
 
 
@@ -28,7 +39,7 @@ export default class ListBatiments extends Component {
         this.getBatiments(idSite).then(data => {
             // console.log(data)
 
-            this.arrayholder = data.data.sort((a,b) => a.name.localeCompare(b.name) );
+            this.arrayholder = data.data.sort((a, b) => a.name.localeCompare(b.name));
             this.setState({
                 isLoading: false,
                 batiments: data.data,
@@ -59,60 +70,80 @@ export default class ListBatiments extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
-        const bat=this.props.navigation.getParam('site');
-        return(
-                <View style={styles.container} >
-                      <Text style={styles.titleDetail}>Batiments</Text>
-                    <SearchBar
-                        searchIcon={{ size: 24 }}
-                        onChangeText={text => this.SearchFilterFunction(text)}
-                        onClear={() => this.SearchFilterFunction('')}
-                        placeholder="Rechercher"
-                        value={this.state.search}
-                        round
-                        lightTheme
-                    />
+        const bat = this.props.navigation.getParam('site');
+        return (
+            <View style={styles.container}>
+                <Text style={styles.titleDetail}>Batiments</Text>
+                <SearchBar
+                    searchIcon={{size: 24}}
+                    onChangeText={text => this.SearchFilterFunction(text)}
+                    onClear={() => this.SearchFilterFunction('')}
+                    placeholder="Rechercher"
+                    value={this.state.search}
+                    round
+                    lightTheme
+                />
+                <View style={{height: "80%"}}>
                     <SafeAreaView style={{flex: 0}}>
-                    {
-                         this.state.batiments ?
+                        {
+                            this.state.batiments ?
 
-                        <FlatList
-                          contentContainerStyle={styles.scrollView}
-                          refreshControl={
-                          <RefreshControl refreshing={this.state.isRefreshing} onRefresh={this.onRefresh} />
-                          }
-                            data={this.state.batiments}
-                            keyExtractor={item => item.id_site}
-                            renderItem={ ({item}) =>
-                                <View style={styles.row}>
-                                    <View style={styles.column}>
-                                    <Text onPress={() => {
-                                        Alert.alert(`${item.name}`,
-                                            'details du batiments',
-                                            [
-                                                {
-                                                    text: 'Fermer', onPress: () => console.log('Cancel Pressed'),
-                                                    style: 'cancel',
-                                                },
-                                                {text: 'Voir', onPress: () => navigate('Detailslieu', {location: item.name, data: item})},
-                                            ]
-                                        );
-                                    }}style={styles.item} >{item.name} : </Text>
-                                    </View>
+                                <FlatList
+                                    contentContainerStyle={styles.scrollView}
+                                    refreshControl={
+                                        <RefreshControl refreshing={this.state.isRefreshing}
+                                                        onRefresh={this.onRefresh}/>
+                                    }
+                                    data={this.state.batiments}
+                                    keyExtractor={item => item.id_site}
+                                    renderItem={({item}) =>
+                                        <View style={styles.row}>
+                                            <View style={styles.column}>
+                                                <Text onPress={() => {
+                                                    Alert.alert(`${item.name}`,
+                                                        'details du batiments',
+                                                        [
+                                                            {
+                                                                text: 'Fermer',
+                                                                onPress: () => console.log('Cancel Pressed'),
+                                                                style: 'cancel',
+                                                            },
+                                                            {
+                                                                text: 'Voir',
+                                                                onPress: () => navigate('Detailslieu', {
+                                                                    location: item.name,
+                                                                    data: item
+                                                                })
+                                                            },
+                                                        ]
+                                                    );
+                                                }} style={styles.item}>{item.name} : </Text>
+                                            </View>
 
-                                    <View style={styles.column}>
-                                        <Text style={styles.niv2} >Instantané: {item.number_user}/{item.number_places}</Text>
-                                        <Text style={styles.link} onPress={() => {navigate('Detailslieu', {location: item.name, data: item})}}>Afficher plus d'horaires</Text>
-                                        <Text style={styles.link} onPress={() => {navigate('Parameter', {location: item.name, data: item,id_location: item.id_location})}}>Être notifié</Text>
-                                    </View>
-                                </View>
-                            }
-                            keyExtractor={item => item.id_location}
-                        />: <Text style={styles.paragraph}>Oups, Il y a aucun Batiments pour {bat}</Text>
-                    }
+                                            <View style={styles.column}>
+                                                <Text
+                                                    style={styles.niv2}>Instantané: {item.number_user}/{item.number_places}</Text>
+                                                <Text style={styles.link} onPress={() => {
+                                                    navigate('Detailslieu', {location: item.name, data: item})
+                                                }}>Afficher plus d'horaires</Text>
+                                                <Text style={styles.link} onPress={() => {
+                                                    navigate('Parameter', {
+                                                        location: item.name,
+                                                        data: item,
+                                                        id_location: item.id_location
+                                                    })
+                                                }}>Être notifié</Text>
+                                            </View>
+                                        </View>
+                                    }
+                                    keyExtractor={item => item.id_location}
+                                /> : <Text style={styles.paragraph}>Oups, Il y a aucun Batiments pour {bat}</Text>
+
+                        }
 
                     </SafeAreaView>
                 </View>
+            </View>
         );
     }
 
@@ -125,7 +156,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     column: {
-        flex:1,
+        flex: 1,
     },
     item: {
         padding: 10,
@@ -133,6 +164,7 @@ const styles = StyleSheet.create({
         height: 44,
         textDecorationLine: 'underline'
     },
+    scrollView: {},
     row: {
         flexDirection: 'row',
         paddingBottom: 10,
@@ -165,7 +197,7 @@ const styles = StyleSheet.create({
         margin: 24,
         fontSize: 18,
         textAlign: 'center',
-        color:'#74b9ff',
-      },
+        color: '#74b9ff',
+    },
 })
 
