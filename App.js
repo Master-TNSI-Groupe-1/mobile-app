@@ -139,7 +139,7 @@ class HomeScreen extends React.Component {
                   {/* <TouchableOpacity onPress={this.onPress}>
                     <Text>Activer la géo-localisation en arrière plan!</Text>
                   </TouchableOpacity> */}
-                  <Text style={styles.paragraph}>Cordonnées gps: {this.state.location}</Text>
+                  {/*<Text style={styles.paragraph}>Cordonnées gps: {this.state.location}</Text>*/}
                 </View>
 
             </View>
