@@ -27,10 +27,12 @@ export default class ListBatiments extends Component {
         const idSite = this.props.navigation.getParam('id');
         this.getBatiments(idSite).then(data => {
             // console.log(data)
+
             this.arrayholder = data.data;
             this.setState({
                 isLoading: false,
-                batiments: data.data
+                batiments: data.data,
+                isRefreshing: false
             });
         });
     }
@@ -52,10 +54,7 @@ export default class ListBatiments extends Component {
 
     onRefresh = () => {
         this.setState({isRefreshing: true});
-        this.componentDidMount(); // refresh the component datas by calling componentDidMount wich fecth datas from db
-        setTimeout(() => {
-            this.setState({isRefreshing: false});
-        }, 2000);
+        this.componentDidMount();
     }
 
     render() {
@@ -76,7 +75,7 @@ export default class ListBatiments extends Component {
                     <SafeAreaView style={{flex: 0}}>
                     {
                          this.state.batiments ?
-                     
+
                         <FlatList
                           contentContainerStyle={styles.scrollView}
                           refreshControl={
@@ -110,8 +109,8 @@ export default class ListBatiments extends Component {
                             }
                             keyExtractor={item => item.id_location}
                         />: <Text style={styles.paragraph}>Oups, Il y a aucun Batiments pour {bat}</Text>
-                    } 
-                        
+                    }
+
                     </SafeAreaView>
                 </View>
         );
