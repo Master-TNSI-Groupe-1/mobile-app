@@ -28,7 +28,7 @@ export default class ListBatiments extends Component {
         this.getBatiments(idSite).then(data => {
             // console.log(data)
 
-            this.arrayholder = data.data;
+            this.arrayholder = data.data.sort((a,b) => a.name.localeCompare(b.name) );
             this.setState({
                 isLoading: false,
                 batiments: data.data,
