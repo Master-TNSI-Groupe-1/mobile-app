@@ -17,7 +17,7 @@ import { Notifications } from 'expo';
 
 /**constantes */
 const LOCATION_TASK_NAME = 'background-location-task';
-var token = '';
+var token = null;
 const ws = new WebSocket('ws://3.87.54.32:6466');
 var wsFlux = {
   user: '',
@@ -71,7 +71,6 @@ class HomeScreen extends React.Component {
 
 
     componentDidMount() {
-      this.getToken();
       // registerForPushNotificationsAsync();
       if (Platform.OS === 'android' && !Constants.isDevice) {
         this.setState({
@@ -83,10 +82,6 @@ class HomeScreen extends React.Component {
       }
     }
 
-    getToken = async() => {
-      token = await Notifications.getExpoPushTokenAsync();
-      console.log(token)
-    }
 
     getLocationAsync = async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -99,16 +94,20 @@ class HomeScreen extends React.Component {
       const location = await Location.getCurrentPositionAsync({});
       // console.log('coords',location.coords.longitude);
       this.setState({ location: JSON.stringify(location) });
-      wsFlux.user = '';
-      wsFlux.geoposition.longitude = location.coords.longitude;
-      wsFlux.geoposition.latitude = location.coords.latitude;
-  
-      ws.onopen = () => {
-        // connection opened
-        console.log('successfully connected')
-        ws.send(wsFlux); // send a message
-      };
-      console.log('flux', wsFlux)     
+      token = await Notifications.getExpoPushTokenAsync();
+      
+      if (token) {
+        wsFlux.user = token;
+        wsFlux.geoposition.longitude = location.coords.longitude;
+        wsFlux.geoposition.latitude = location.coords.latitude;
+    
+        ws.onopen = () => {
+          // connection opened
+          console.log('successfully connected')
+          ws.send(wsFlux); // send a message
+        };
+        console.log('flux', wsFlux)     
+      }
       
     };
 
@@ -186,22 +185,26 @@ const App = createAppContainer(MainNavigator);
 export default App;
 
 
-TaskManager.defineTask(LOCATION_TASK_NAME, ({ data: { locations }, error }) => {
+TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data: { locations }, error }) => {
   if (error) {
     // Error occurred - check `error.message` for more details.
     console.log('error',error)
     return;
   }
-  // console.log('Received new locations ', locations[0].coords);
+  console.log('Received new locations ', locations[0].coords);
+  token = await Notifications.getExpoPushTokenAsync();
+  if (token) {
     wsFlux.user = token;
     wsFlux.geoposition.longitude = locations[0].coords.longitude;
     wsFlux.geoposition.latitude = locations[0].coords.latitude;
+
     ws.onopen = () => {
       // connection opened
       console.log('successfully connected')
       ws.send(wsFlux); // send a message
     };
-    // console.log('flux', wsFlux)
+    console.log('trace', wsFlux)     
+  }
 });
 
 const styles = StyleSheet.create({
