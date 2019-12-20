@@ -24,7 +24,7 @@ export default class ParameterScreen extends React.Component {
   render() {
     const {navigation} = this.props;
 
-    var id =  navigation.getParam('id_location');
+    var id =  navigation.getParam('data').id_location;
 
     //console.log('id received ' , id);
     var place = JSON.stringify(navigation.getParam('location', 'Place not selected'))

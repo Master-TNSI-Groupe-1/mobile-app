@@ -22,14 +22,24 @@ export default class DetailslieuScreen extends React.Component {
   componentDidMount() {
     const data = this.props.navigation.getParam('data');
     // console.log('idSite',data.id_location);
+    
     this.getPrevisionsByBatiment(data.id_location).then(data => {
         // console.log('previsions', JSON.parse(data.data[0].json_object))
         if (data.data.json_object) {
           const parsedData = JSON.parse(data.data.json_object);
+          const updatedData = parsedData.data.map( (e,id) => {
+            return {
+                heure : e.heure,
+                estimation : e.estimation,
+                user_max:e.user_max,
+                currentId : id
+            }
+        });
+      //  console.log(updatedData);
           this.arrayholder = parsedData.data;
           this.setState({
               isLoading: false,
-              data: parsedData.data
+              data: updatedData
           });
         }
     });
@@ -57,20 +67,22 @@ export default class DetailslieuScreen extends React.Component {
     <View style={styles.main}>
       <Text style={styles.titleDetail}>Plus de Details pour: {place}</Text>
             <View style={styles.flatListContainer}>
-            <SafeAreaView style={styles.container}>
-                <ScrollView
-                  contentContainerStyle={styles.scrollView}
-                  refreshControl={
-                    <RefreshControl refreshing={this.state.isRefreshing} onRefresh={onRefresh} />
-                  }
-                  >
+            <SafeAreaView style={{flex: 0}} >
+            
                     <FlatList
+                    contentContainerStyle={styles.scrollView}
+                    refreshControl={
+                      <RefreshControl refreshing={this.state.isRefreshing} onRefresh={onRefresh} />
+                    }
                         data={this.state.data}
-                        keyExtractor={x => x.id_location}
+                        keyExtractor={(item) => item.id}
+                       //keyExtractor={(item, index) => index}
+                        //keyExtractor={item => item.id_location}
+                        keyExtractor={(item, index) => ((data.length - index - 1).toString())}
                         renderItem={({item}) => <DetailsItem Detail={item}/>
                         }
                     /> 
-                </ScrollView>  
+             
               </SafeAreaView>  
             </View>
           

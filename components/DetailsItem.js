@@ -8,12 +8,13 @@ export default class DetailsItem extends React.Component {
     
     const detail = this.props.Detail
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container}  >
           <ScrollView>
             { 
               detail ? 
-              <View style={styles.row}>
+              <View style={styles.row} key={detail.currentId}>
                 <Text style={styles.heure} >{detail.heure}</Text>
+                
                 <View>
                   <Text style={styles.primaryText}>
                     flux estimé à : {detail.estimation}

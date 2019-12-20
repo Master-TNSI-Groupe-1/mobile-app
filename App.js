@@ -82,6 +82,14 @@ class HomeScreen extends React.Component {
       }
     }
 
+    
+    onRefresh = () => {
+      this.setState({isRefreshing: true});
+      this.componentDidMount(); // refresh the component datas by calling componentDidMount wich fecth datas from db
+      setTimeout(() => {
+          this.setState({isRefreshing: false});
+      }, 2000);
+    }
 
     getLocationAsync = async () => {
       let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -149,22 +157,22 @@ class HomeScreen extends React.Component {
                   lightTheme
                 />
               <View style={styles.list}>
-                    {
+                  {
 
-                        this.state.data.map((value, key) => {
-                            return <Button key={key}
-                                           style={styles.buttonSize}
-                                           title={value.name}
-                                           onPress={() => navigate('Batiments', {site: value.name, id: value.id_site})}
-                            />
-                        })
-                    }
-                </View>
+                      this.state.data.map((value, key) => {
+                          return <Button key={key}
+                                          style={styles.buttonSize}
+                                          title={value.name}
+                                          onPress={() => navigate('Batiments', {site: value.name, id: value.id_site})}
+                          />
+                      })
+                  }
+              </View>
                 <View style={styles.container}>
-                  {/* <TouchableOpacity onPress={this.onPress}>
-                    <Text>Activer la géo-localisation en arrière plan!</Text>
-                  </TouchableOpacity> */}
-                  <Text style={styles.paragraph}>Cordonnées gps: {this.state.location}</Text>
+                { this.state.errorMessage?                     
+                  <Text style={styles.paragraph}>{this.state.errorMessage}</Text> : null              
+                }
+                  
                 </View>
 
             </View>
@@ -191,7 +199,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data: { locations }, error }
     console.log('error',error)
     return;
   }
-  console.log('Received new locations ', locations[0].coords);
+  // console.log('Received new locations ', locations[0].coords);
   token = await Notifications.getExpoPushTokenAsync();
   if (token) {
     wsFlux.user = token;
@@ -236,6 +244,7 @@ const styles = StyleSheet.create({
       margin: 24,
       fontSize: 18,
       textAlign: 'center',
+      color: 'red'
     },
     item: {
         padding: 10,
