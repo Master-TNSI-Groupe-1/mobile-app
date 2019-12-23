@@ -172,7 +172,6 @@ class HomeScreen extends React.Component {
                 { this.state.errorMessage?                     
                   <Text style={styles.paragraph}>{this.state.errorMessage}</Text> : null              
                 }
-                  
                 </View>
 
             </View>

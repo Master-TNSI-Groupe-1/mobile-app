@@ -22,7 +22,7 @@ export default class DetailslieuScreen extends React.Component {
   componentDidMount() {
     const data = this.props.navigation.getParam('data');
     // console.log('idSite',data.id_location);
-    
+
     this.getPrevisionsByBatiment(data.id_location).then(data => {
         // console.log('previsions', JSON.parse(data.data[0].json_object))
         if (data.data.json_object) {
@@ -39,7 +39,8 @@ export default class DetailslieuScreen extends React.Component {
           this.arrayholder = parsedData.data;
           this.setState({
               isLoading: false,
-              data: updatedData
+              data: updatedData,
+              isRefreshing: false
           });
         }
     });
@@ -58,9 +59,7 @@ export default class DetailslieuScreen extends React.Component {
     const onRefresh = () => {
       this.setState({isRefreshing: true});
       this.componentDidMount();
-      setTimeout(() => {
-        this.setState({isRefreshing: false});
-      }, 2000);
+
     }
 
     return (
@@ -68,7 +67,7 @@ export default class DetailslieuScreen extends React.Component {
       <Text style={styles.titleDetail}>Plus de Details pour: {place}</Text>
             <View style={styles.flatListContainer}>
             <SafeAreaView style={{flex: 0}} >
-            
+
                     <FlatList
                     contentContainerStyle={styles.scrollView}
                     refreshControl={
@@ -81,11 +80,11 @@ export default class DetailslieuScreen extends React.Component {
                         keyExtractor={(item, index) => ((data.length - index - 1).toString())}
                         renderItem={({item}) => <DetailsItem Detail={item}/>
                         }
-                    /> 
-             
-              </SafeAreaView>  
+                    />
+
+              </SafeAreaView>
             </View>
-          
+
     </View>
 
     );
@@ -116,29 +115,29 @@ const styles = StyleSheet.create({
    // paddingTop: '5%'
   },
 
-   row: { 
+   row: {
      flexDirection: 'row',
      alignItems: 'center',
      marginTop:5,
-     paddingTop:10, 
+     paddingTop:10,
      paddingBottom:10,
-     borderBottomWidth:0.4, 
+     borderBottomWidth:0.4,
      borderTopWidth:0,
     // borderLeftWidth:0.2,
      //borderRightWidth:0.2,
-     borderColor:'grey', 
+     borderColor:'grey',
      marginHorizontal: 20,
      shadowOffset:{  width: 1,  height: 1,  },
      shadowColor: 'white',
-     shadowOpacity: 0.5, 
-     borderStyle: 'solid', 
-     borderRadius:7,  
-     
-     
+     shadowOpacity: 0.5,
+     borderStyle: 'solid',
+     borderRadius:7,
+
+
 },
    heure: { width: 50, height: 50, borderRadius: 25, marginRight: 18, padding:15,marginLeft:20,},
    primaryText: {
-     
+
      fontSize: 14,
      color: 'black',
      marginBottom: 4,
