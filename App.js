@@ -12,11 +12,20 @@ import ParameterScreen from './components/ParameterView';
 import ListBatiments from './components/listBatiments';
 import DetailslieuScreen from './components/Detailslieu';
 import { SearchBar } from 'react-native-elements';
+import { Notifications } from 'expo';
 
 
 /**constantes */
 const LOCATION_TASK_NAME = 'background-location-task';
-
+var token = null;
+const ws = new WebSocket('ws://3.87.54.32:6466');
+var wsFlux = {
+  user: '',
+  geoposition : {
+    longitude: '',
+    latitude: '',
+  }
+}
 
 import registerForPushNotificationsAsync from './components/notifications';
 
@@ -62,7 +71,7 @@ class HomeScreen extends React.Component {
 
 
     componentDidMount() {
-      //registerForPushNotificationsAsync();
+      // registerForPushNotificationsAsync();
       if (Platform.OS === 'android' && !Constants.isDevice) {
         this.setState({
           errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
@@ -71,6 +80,15 @@ class HomeScreen extends React.Component {
         this.getLocationAsync();
         this.updateLocationBackground();
       }
+    }
+
+    
+    onRefresh = () => {
+      this.setState({isRefreshing: true});
+      this.componentDidMount(); // refresh the component datas by calling componentDidMount wich fecth datas from db
+      setTimeout(() => {
+          this.setState({isRefreshing: false});
+      }, 2000);
     }
 
     getLocationAsync = async () => {
@@ -82,14 +100,29 @@ class HomeScreen extends React.Component {
       }
 
       const location = await Location.getCurrentPositionAsync({});
+      // console.log('coords',location.coords.longitude);
       this.setState({ location: JSON.stringify(location) });
-      console.log('location', this.state.location)
+      token = await Notifications.getExpoPushTokenAsync();
+      
+      if (token) {
+        wsFlux.user = token;
+        wsFlux.geoposition.longitude = location.coords.longitude;
+        wsFlux.geoposition.latitude = location.coords.latitude;
+    
+        ws.onopen = () => {
+          // connection opened
+          console.log('successfully connected')
+          ws.send(wsFlux); // send a message
+        };
+        console.log('flux', wsFlux)     
+      }
+      
     };
 
     updateLocationBackground = async () => {
       await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
         accuracy: Location.Accuracy.Balanced,
-        distanceInterval: 0.5,
+        distanceInterval: 1,
         showsBackgroundLocationIndicator: false,
       })
     };
@@ -124,22 +157,21 @@ class HomeScreen extends React.Component {
                   lightTheme
                 />
               <View style={styles.list}>
-                    {
+                  {
 
-                        this.state.data.map((value, key) => {
-                            return <Button key={key}
-                                           style={styles.buttonSize}
-                                           title={value.name}
-                                           onPress={() => navigate('Batiments', {site: value.name, id: value.id_site})}
-                            />
-                        })
-                    }
-                </View>
+                      this.state.data.map((value, key) => {
+                          return <Button key={key}
+                                          style={styles.buttonSize}
+                                          title={value.name}
+                                          onPress={() => navigate('Batiments', {site: value.name, id: value.id_site})}
+                          />
+                      })
+                  }
+              </View>
                 <View style={styles.container}>
-                  {/* <TouchableOpacity onPress={this.onPress}>
-                    <Text>Activer la géo-localisation en arrière plan!</Text>
-                  </TouchableOpacity> */}
-                  {/*<Text style={styles.paragraph}>Cordonnées gps: {this.state.location}</Text>*/}
+                { this.state.errorMessage?                     
+                  <Text style={styles.paragraph}>{this.state.errorMessage}</Text> : null              
+                }
                 </View>
 
             </View>
@@ -160,14 +192,26 @@ const App = createAppContainer(MainNavigator);
 export default App;
 
 
-TaskManager.defineTask(LOCATION_TASK_NAME, ({ data: { locations }, error }) => {
+TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data: { locations }, error }) => {
   if (error) {
     // Error occurred - check `error.message` for more details.
     console.log('error',error)
     return;
   }
-  // this.setState({ location: JSON.stringify(location) });
-  console.log('Received new locations ' + new Date(), locations);
+  // console.log('Received new locations ', locations[0].coords);
+  token = await Notifications.getExpoPushTokenAsync();
+  if (token) {
+    wsFlux.user = token;
+    wsFlux.geoposition.longitude = locations[0].coords.longitude;
+    wsFlux.geoposition.latitude = locations[0].coords.latitude;
+
+    ws.onopen = () => {
+      // connection opened
+      console.log('successfully connected')
+      ws.send(wsFlux); // send a message
+    };
+    console.log('trace', wsFlux)     
+  }
 });
 
 const styles = StyleSheet.create({
@@ -199,6 +243,7 @@ const styles = StyleSheet.create({
       margin: 24,
       fontSize: 18,
       textAlign: 'center',
+      color: 'red'
     },
     item: {
         padding: 10,
@@ -216,39 +261,3 @@ const styles = StyleSheet.create({
         margin: 5,
     }
 });
-
-/*
-                <View style={styles.list}>
-                    {
-                        this.state.data.map((value, key) => {
-                            return <Button key={key}
-                              style={styles.button}
-                              title={value.title}
-                              onPress={() => navigate('Batiments', {location: value.title, data: value})}
-                            />
-                        })
-                    }
-                </View>
-
-                 <FlatList data={this.state.data}
-                    renderItem={({item}) =>
-                        <Text style={styles.item} onPress={() => navigate('Batiments', {location: item.title, data: item})}> {item.title} </Text>
-                    }
-                />
-
-                            <View>{
-                this.state.data.map((value, key) => {
-                    return  <TouchableHighlight
-                    style={styles.button}
-                    key={key}
-                    onPress={() => navigate('Batiments', {location: value.title, data: value})}
-                   >
-                        <Image
-                   style={styles.button}
-                   source={require('./monthouy.jpg')}
-                 />
-                   </TouchableHighlight>
-                })
-                }
-            </View>
-                */
