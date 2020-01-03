@@ -1,6 +1,7 @@
 import {Notifications} from 'expo';
 import * as Permissions from 'expo-permissions';
 import {Alert} from "react-native";
+import {IP_NOTIFICATION} from '../datas/ip-info';
 
 /**
  * Envoie une notification au terminal
@@ -33,13 +34,14 @@ export default async function registerForPushNotificationsAsync(lieu, hdebut, hf
 
     console.log(token);
     // POST the token to your backend server from where you can retrieve it to send push notifications.
-    let chemin = 'http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' + hfin + '/' + min + '/' + max;
+    let chemin = IP_NOTIFICATION + 'add/token/' + token + '/' + lieu + '/' + hdebut + '/' + hfin + '/' + min + '/' + max;
    // console.log(chemin);
 
     if (parseInt(hdebut) > parseInt(hfin) || parseInt(min) > parseInt(max)) {
         Alert.alert("le temps minimum ne peux pas être supérieur au temps maximum ou le flux minimum ne peux pas être supérieur au flux maximum ou ")
     } else {
-        fetch('http://3.87.54.32:3000/add/token/' + token + '/' + lieu + '/' + hdebut + '/' + hfin + '/' + min + '/' + max)
+        console.log('chemin requested', chemin);
+        fetch(chemin)
             .then(() => {
 
                 Alert.alert(

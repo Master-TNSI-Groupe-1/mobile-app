@@ -2,11 +2,12 @@ import React from 'react';
 import { FlatList,SafeAreaView,ScrollView,RefreshControl,SectionList,StyleSheet, Text, View, Alert,Div } from 'react-native';
 import info_lieu from '../Helpers/info_lieu';
 import DetailsItem from './DetailsItem';
+import {IP} from '../datas/ip-info';
 
 export default class DetailslieuScreen extends React.Component {
   constructor() {
     super();
-    this.url = 'http://3.87.54.32/get/previsions/';
+    this.url = IP + '/get/previsions/';
     this.state = {
       isRefreshing: false,
       data: [],

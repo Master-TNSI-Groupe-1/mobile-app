@@ -12,6 +12,7 @@ import ParameterScreen from './components/ParameterView';
 import ListBatiments from './components/listBatiments';
 import DetailslieuScreen from './components/Detailslieu';
 import { SearchBar } from 'react-native-elements';
+import {IP} from './datas/ip-info';
 
 
 /**constantes */
@@ -27,7 +28,7 @@ class HomeScreen extends React.Component {
 
     constructor() {
         super();
-        this.sitesURL = 'http://3.87.54.32/get/sites';
+        this.sitesURL = IP + '/get/sites';
         this.placeList = [];
 
         this.state = {

@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {IP} from '../datas/ip-info';
+
 import {
     FlatList,
     SafeAreaView,
@@ -18,7 +20,8 @@ export default class ListBatiments extends Component {
 
     constructor(props) {
         super(props);
-        this.batimentsURL = 'http://3.87.54.32/get/lieux/';
+        console.log('ip find' , IP);
+        this.batimentsURL = IP + '/get/lieux/';
         this.state = {
             isLoading: true,
             isRefreshing: false,
